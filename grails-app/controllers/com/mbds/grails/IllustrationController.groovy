@@ -1,8 +1,9 @@
 package com.mbds.grails
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
-
+@Secured()
 class IllustrationController {
 
     IllustrationService illustrationService

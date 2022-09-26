@@ -11,13 +11,14 @@ class BootStrap {
     def init = { servletContext ->
         def adminUserInstance = new User(username: "admin",password: "admin").save()
         def adminRole = new Role(authority: "ROLE_ADMIN").save()
+        def userRole = new Role(authority: "ROLE_USER").save()
         UserRole.create(adminUserInstance, adminRole, true)
 
         // On boucle sur une liste de 5 prénoms
         ["Alice", "Bob", "Charly", "Denis", "Etienne"].each {
             String username ->
                 // On crée les utilisateurs associés
-                def userInstance = new User(username: username, password: "password")
+                def userInstance = new User(username: username, password: "password").save()
                 // Pour chaque utilisateur on boucle 5 fois
                 (1..5).each {
                     Integer index ->
@@ -30,7 +31,7 @@ class BootStrap {
                         // On associe l'annonce créée à l'utilisateur
                         userInstance.addToAnnonces(annonceInstance)
                         // Et on sauvegarde l'utilisateur qui va sauvegarder ses annonces qui sauvegarderont leurs illustrations
-                        userInstance.save(flush: true, failOnError: true)
+                        UserRole.create(userInstance, userRole, true)
                 }
         }
 
