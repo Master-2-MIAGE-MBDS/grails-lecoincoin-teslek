@@ -31,6 +31,8 @@ class ApiController {
             case "PATCH":
                 break;
             case "DELETE":
+                annonceInstance.delete(flush:true)
+                annonceInstance.save()
                 break;
             default:
                 return response.status = 405
@@ -44,6 +46,21 @@ class ApiController {
      * POST / GET
      */
     def annonces() {
+        def annoncesInstance = Annonce.getAll()
+        switch (request.getMethod()) {
+
+            case "GET":
+                renderThis(request.getHeader("Accept"), annoncesInstance)
+                break;
+            case "POST":
+
+                break;
+            default:
+                return response.status = 405
+                break;
+        }
+        return response.status = 406
+
 
     }
 
@@ -65,8 +82,12 @@ class ApiController {
                 break;
 
             case "PUT":
+                userInstance.title=params.title
                 break;
             case "PATCH":
+                if(params.title){
+
+                }
                 break;
             case "DELETE":
                 break;
@@ -80,6 +101,24 @@ class ApiController {
     }
 
     def users() {
+
+        def usersInstance = User.getAll()
+        switch (request.getMethod()) {
+
+            case "GET":
+                renderThis(request.getHeader("Accept"), usersInstance)
+                break;
+
+            case "POST":
+
+                break;
+            default:
+                return response.status = 405
+                break;
+        }
+        return response.status = 406
+
+
 
     }
 

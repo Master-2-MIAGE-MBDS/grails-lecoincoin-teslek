@@ -3,6 +3,8 @@
 <head>
     <title>Lecoincoin</title>
     <asset:stylesheet src="index.css"/>
+    <asset:stylesheet src="admin.css"/>
+
     <asset:javascript src="jquery-2.2.0.min.js"></asset:javascript>
 </head>
 
@@ -38,14 +40,21 @@
                 <div class="container">
                     <section id="panel-1">
                         <main>
+                           <g:each in="${usersList}" var="c">
+                                    <p >${c.getUsername()} </p>
+                                </g:each>
 
                         </main>
                     </section>
                     <section id="panel-2">
                         <main>
+                        <div class="flex-container">
                             <g:each in="${annoncesList}" var="c">
-                                <p>${c.getAuthor().getUsername()} : ${c.getTitle()}</p>
+
+                                  <p >${c.getAuthor().getUsername()} : ${c.getTitle()}</p>
+
                             </g:each>
+                        </div>
                         </main>
                     </section>
                 </div>

@@ -9,5 +9,6 @@ class HomeController {
     def index() {
         List<Annonce> annonces = Annonce.findAll()
         [annoncesList : annonces ]
+
     }
 }
