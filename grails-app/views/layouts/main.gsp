@@ -14,6 +14,6 @@
     <g:layoutHead/>
 </head>
 <body>
-<h1 class="section-title">LeCoinCoin</h1>
+
 </body>
 </html>

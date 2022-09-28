@@ -1,67 +1,33 @@
-<%@ page import="com.mbds.grails.AnnonceController; com.mbds.grails.UserController" %>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Lecoincoin</title>
-    <asset:stylesheet src="index.css"/>
-    <asset:javascript src="index.js"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Responsive Admin</title>
+    <asset:stylesheet src="login.css"/>
+
 </head>
 <body>
-<sec:ifLoggedIn>
-    <div>
-    </div>
-</sec:ifLoggedIn>
-<sec:ifNotLoggedIn>
-<section class="forms-section">
-
-    <div class="forms">
-        <div class="form-wrapper is-active">
-            <button type="button" class="switcher switcher-login">
-                Login
-                <span class="underline"></span>
-            </button>
-            <form class="form form-login" action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" autocomplete="off">
-                <fieldset>
-                    <legend>Please, enter your email and password for login.</legend>
-                    <div class="input-block">
-                        <label for="username">E-mail</label>
-                        <input type="text" required name="${usernameParameter ?: 'username'}" id="username">
-                    </div>
-                    <div class="input-block">
-                        <label for="password">Password</label>
-                        <input type="password" required name="${passwordParameter ?: 'password'}" id="password">
-                    </div>
-                </fieldset>
-                <input type="submit" class="btn-login" value="${message(code: 'springSecurity.login.button')}"/>
-
-            </form>
+<div class="center">
+    <h1>Login</h1>
+    <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" autocomplete="off">
+        <div class="txt_field">
+            <input type="text" required name="${usernameParameter ?: 'username'}" id="username">
+            <span></span>
+            <label>Username</label>
         </div>
-        <div class="form-wrapper">
-            <button type="button" class="switcher switcher-signup">
-                Sign Up
-                <span class="underline"></span>
-            </button>
-            <form class="form form-signup">
-                <fieldset>
-                    <legend>Please, enter your email, password and password confirmation for sign up.</legend>
-                    <div class="input-block">
-                        <label for="signup-email">E-mail</label>
-                        <input id="signup-email" type="email" required>
-                    </div>
-                    <div class="input-block">
-                        <label for="signup-password">Password</label>
-                        <input id="signup-password" type="password" required>
-                    </div>
-                    <div class="input-block">
-                        <label for="signup-password-confirm">Confirm password</label>
-                        <input id="signup-password-confirm" type="password" required>
-                    </div>
-                </fieldset>
-                <button type="submit" class="btn-signup">Continue</button>
-            </form>
+        <div class="txt_field" >
+            <input type="password" required name="${passwordParameter ?: 'password'}" id="password">
+            <span></span>
+            <label>Password</label>
         </div>
-    </div>
-</sec:ifNotLoggedIn>
-</section>
+        <div class="pass">Forgot Password?</div>
+        <input type="submit" value="Login">
+        <div class="signup_link">
+            Not a member? <a href="#">Signup</a>
+        </div>
+    </form>
+</div>
 </body>
+
 </html>
