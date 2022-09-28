@@ -2,6 +2,7 @@
 
 // Added by the Spring Security Core plugin:
 grails.plugin.springsecurity.auth.loginFormUrl = '/'
+grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/user/index'
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.mbds.grails.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.mbds.grails.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.mbds.grails.Role'

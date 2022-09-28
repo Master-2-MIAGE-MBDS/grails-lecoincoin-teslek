@@ -1,5 +1,6 @@
 package com.mbds.grails
 
+import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
@@ -9,11 +10,12 @@ class AnnonceController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond annonceService.list(params), model:[annonceCount: annonceService.count()]
     }
-
+    @Secured('ROLE_USER')
     def show(Long id) {
         respond annonceService.get(id)
     }
@@ -95,5 +97,9 @@ class AnnonceController {
             }
             '*'{ render status: NOT_FOUND }
         }
+    }
+    def getAllElements(){
+        List<Annonce> annonces = Annonce.findAll()
+        [annoncesList : annonces ]
     }
 }
