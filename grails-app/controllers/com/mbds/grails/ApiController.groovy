@@ -26,7 +26,6 @@ class ApiController {
             case "GET":
                 renderThis(request.getHeader("Accept"), annonceInstance)
                 break;
-
             case "PUT":
                 break;
             case "PATCH":
