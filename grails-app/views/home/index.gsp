@@ -3,66 +3,63 @@
 <head>
     <title>Lecoincoin</title>
     <asset:stylesheet src="index.css"/>
-    <asset:stylesheet src="admin.css"/>
-
-    <asset:javascript src="jquery-2.2.0.min.js"></asset:javascript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
-
-<div class="wrapper">
-
+<div id="viewport">
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <header>
+            <a href="#">LeCoinCoin</a>
+        </header>
+        <ul class="nav">
+            <li>
+                <a href="#">
+                    <i class="zmdi zmdi-view-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="zmdi zmdi-widgets"></i>
+                    All Users
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="zmdi zmdi-calendar"></i>
+                    All Ads
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Content -->
+    <div id="content">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#"><i class="zmdi zmdi-notifications text-danger"></i>
+                        </a>
+                    </li>
+                    <li><a href="#">Test User</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <h1>Simple Sidebar</h1>
+            <p>
+                Make sure to keep all page content within the
+                <code>#content</code>.
+            </p>
+        </div>
+    </div>
+</div>
     <sec:ifLoggedIn>
         <sec:ifAnyGranted roles="ROLE_USER">
-            <div>
-                <g:each in="${annoncesList}" var="c">
-                    <p>${c.getAuthor().getUsername()} : ${c.getTitle()}</p>
-                </g:each>
-            </div>
         </sec:ifAnyGranted>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
-            <input id="panel-1-ctrl" class="panel-radios" type="radio" name="tab-radios" checked>
-            <input id="panel-2-ctrl" class="panel-radios" type="radio" name="tab-radios">
-
-            <header id="introduction">
-            </header>
-
-            <ul id="tabs-list">
-
-                <label id="open-nav-label" for="nav-ctrl"> </label>
-                <li id="li-for-panel-1">
-                    <label class="panel-label" for="panel-1-ctrl">All Users</label>
-                </li>
-                <li id="li-for-panel-2">
-                    <label class="panel-label" for="panel-2-ctrl">All Ads</label>
-                </li>
-            </ul>
-
-            <article id="panels">
-                <div class="container">
-                    <section id="panel-1">
-                        <main>
-                           <g:each in="${usersList}" var="c">
-                                    <p >${c.getUsername()} </p>
-                                </g:each>
-
-                        </main>
-                    </section>
-                    <section id="panel-2">
-                        <main>
-                        <div class="flex-container">
-                            <g:each in="${annoncesList}" var="c">
-
-                                  <p >${c.getAuthor().getUsername()} : ${c.getTitle()}</p>
-
-                            </g:each>
-                        </div>
-                        </main>
-                    </section>
-                </div>
-            </article>
         </sec:ifAnyGranted>
     </sec:ifLoggedIn>
     <sec:ifNotLoggedIn>
-
     </sec:ifNotLoggedIn>
 </div>
 
