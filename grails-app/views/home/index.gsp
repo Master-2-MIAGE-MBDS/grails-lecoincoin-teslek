@@ -14,21 +14,40 @@
         <ul class="nav">
             <li>
                 <a href="#">
-                    <i class="zmdi zmdi-view-dashboard"></i> Dashboard
+                    <i class="zmdi zmdi-view-dashboard"></i>
+                    <sec:ifAnyGranted roles="ROLE_USER">
+                        Home
+                    </sec:ifAnyGranted>
+                    <sec:ifAnyGranted roles="ROLE_ADMIN">
+                        Dashboard
+                    </sec:ifAnyGranted>
+
                 </a>
             </li>
-            <li>
-                <a href="#">
-                    <i class="zmdi zmdi-widgets"></i>
-                    All Users
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="zmdi zmdi-calendar"></i>
-                    All Ads
-                </a>
-            </li>
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
+                <li>
+                    <a href="#">
+                        <i class="zmdi zmdi-widgets"></i>
+                        All Users
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="zmdi zmdi-calendar"></i>
+                        All Ads
+                    </a>
+                </li>
+            </sec:ifAnyGranted>
+            <sec:ifAnyGranted roles="ROLE_USER">
+                <li>
+                    <a href="#">
+                        <i class="zmdi zmdi-widgets"></i>
+                        My Account
+                    </a>
+                </li>
+
+            </sec:ifAnyGranted>
+
         </ul>
     </div>
     <!-- Content -->
@@ -40,27 +59,25 @@
                         <a href="#"><i class="zmdi zmdi-notifications text-danger"></i>
                         </a>
                     </li>
-                    <li><a href="#">Test User</a></li>
+                    <li>
+                        <a href="/logout/index">LOGOUT</a>
+                    </li>
                 </ul>
             </div>
         </nav>
         <div class="container-fluid">
-            <h1>Simple Sidebar</h1>
-            <p>
-                Make sure to keep all page content within the
-                <code>#content</code>.
-            </p>
+            <sec:ifLoggedIn>
+                <sec:ifAnyGranted roles="ROLE_USER">
+                </sec:ifAnyGranted>
+                <sec:ifAnyGranted roles="ROLE_ADMIN">
+                </sec:ifAnyGranted>
+            </sec:ifLoggedIn>
+            <sec:ifNotLoggedIn>
+            </sec:ifNotLoggedIn>
         </div>
     </div>
 </div>
-    <sec:ifLoggedIn>
-        <sec:ifAnyGranted roles="ROLE_USER">
-        </sec:ifAnyGranted>
-        <sec:ifAnyGranted roles="ROLE_ADMIN">
-        </sec:ifAnyGranted>
-    </sec:ifLoggedIn>
-    <sec:ifNotLoggedIn>
-    </sec:ifNotLoggedIn>
+
 </div>
 
 </body>
