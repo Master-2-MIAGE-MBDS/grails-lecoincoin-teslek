@@ -90,6 +90,9 @@ class ApiController {
                 }
                 break;
             case "DELETE":
+                userInstance.delete(flush:true)
+                userInstance.save()
+
                 break;
             default:
                 return response.status = 405
@@ -108,7 +111,6 @@ class ApiController {
             case "GET":
                 renderThis(request.getHeader("Accept"), usersInstance)
                 break;
-
             case "POST":
 
                 break;

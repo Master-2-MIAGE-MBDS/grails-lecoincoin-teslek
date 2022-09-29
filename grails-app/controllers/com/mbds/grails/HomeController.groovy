@@ -7,8 +7,12 @@ import static org.springframework.http.HttpStatus.*
 class HomeController {
 
     def index() {
+        List<User> users = User.findAll()
         List<Annonce> annonces = Annonce.findAll()
-        [annoncesList : annonces ]
+        [annoncesList : annonces, usersList : users ]
+
+
+
 
     }
 }
