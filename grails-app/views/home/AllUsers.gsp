@@ -11,6 +11,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
+<body>
 <div id="viewport">
     <!-- Sidebar -->
     <div id="sidebar">
@@ -19,7 +20,7 @@
         </header>
         <ul class="nav">
             <li>
-                <a href="#">
+                <a href="/home/index">
                     <i class="zmdi zmdi-view-dashboard"></i> Dashboard
                 </a>
             </li>
@@ -27,8 +28,6 @@
                 <a   href="/home/AllUsers">
                     <i class="zmdi zmdi-widgets" ></i>
                     AllUsers
-
-
                 </a>
             </li>
             <li>
@@ -77,43 +76,30 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                         <g:uploadForm controller = "api" action = "users" enctype="multipart/form-data">
                                             <tr class="first-tr">
                                                 <td class="title-td"><span>Add New</span></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td class="static"><input type="text" class="form-control" name="username"></td>
-                                                <td class="static"><input type="text" class="form-control" name="role"></td>
-                                                <td class="static"><input type="text" class="form-control" name="password"></td>
+                                                <td class="static"><input type="text" id="username" name="username" class="form-control"></td>
+                                                <td class="static"><input type="text" id="role" class="form-control" name="role"></td>
+                                                <td class="static"><input type="text" id="password" name="password"class="form-control"></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
 
-                                                <td class="static"><button type="submit" class="button green" id="buttonAdd" href="/home/AllUsers" ><i class="glyphicon glyphicon-ok"></i></button></td>
+                                                <td class="static"><button onclick="addUser()" class="button green" id="buttonAdd"><i class="glyphicon glyphicon-ok"></i></button></td>
                                             </tr>
-                                             </g:uploadForm>
                                         <g:each in="${usersList}" var="c">
                                             <tr>
                                                 <td></td>
-
                                                 <td>${c.getId() } </td>
                                                 <td></td>
                                                 <td id="auteur${c.getId()}">${c.getUsername()}</td>
-
-                                                <td id="role${c.getId()}">${c.getAuthorities()[0].getAuthority()}</td>
-
+                                                <td id="role${c.getId()}">${c.getAuthorities()}</td>
                                                 <td id="password${c.getId()}">*********</td>
-
-
                                                 <td>${c.getAnnonces()}</td>
-
-
-
                                                 <td></td>
-
                                                 <td></td>
-
-
                                                 <td class="static"><button class="button grey" id="buttonEdit" value="${c.getId()}"><i class="glyphicon glyphicon-pencil"></i></button><button class="button red" id="Delete_user" value="${c.getId()}" ><i class="glyphicon glyphicon-remove"></i></button></td>
                                             </tr>
                                         </g:each>
@@ -134,7 +120,7 @@
                             <div id="editform">
                                 <g:uploadForm controller = "api" action = "users" enctype="multipart/form-data">
                                     <span>
-                                        <label for="editusrename">Username</label>
+                                        <label for="editusername">Username</label>
                                         <input type="text" id="editusername" name="username" placeholder="">
                                         <br>
                                         <label for="editpassword">Password</label>
@@ -160,84 +146,18 @@
 
     </div>
 </div>
-</div>
-
-
 </body>
 <script type="text/javascript">
 
-
-
-
-
-
-
-
-
-
-
-    // var $table = $('#table');
-    // $(function () {
-    //     $('#toolbar').find('select').change(function () {
-    //         $table.bootstrapTable('refreshOptions', {
-    //             exportDataType: $(this).val()
-    //         });
-    //     });
-    // })
-    // //exporte les données sélectionnées
-    //
-    // var trBoldBlue = $("table");
-    //
-    // $(trBoldBlue).on("click", "tr", function (){
-    //     $(this).toggleClass("bold-blue");
-    // });
-    $("button").click(function() {
-        var button = $(this).val();
-
-        function Delete_Annonce() {
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("DELETE", "http://localhost:8081/api/annonce/" + button, true);
-            xhttp.send();
-
+    $(document).on('click', '#Delete_user', function () {
+        var userId = $(this).val();
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", "http://localhost:8081/api/user/" + userId, true);
+        xhttp.send();
+        setTimeout(function(){
             window.location.reload();
-        }
-        function Delete_User() {
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("DELETE", "http://localhost:8081/api/user/" + button, true);
-            xhttp.send();
-
-            window.location.reload();
-        }
-        function Edit_annonce(){
-            $(".input").show();
-            $(".input").show();
-        }
-
-        function Edit_user(){
-            $(".input").show();
-            $(".input").show();
-        }
-
-        function Edit_user(){
-
-
-        }
-
-        if (this.id == 'Delete_annonce'){
-            Delete_Annonce()
-        }
-        if (this.id == 'Delete_user'){
-            Delete_User()
-        }
-        if (this.id =='Edit_annonce'){
-            Edit_annonce()
-
-        }
+        }, 700);
     });
-
-
     $(document).on('click', '#buttonEdit', function (event) {
         var adId = $(this).val();
 
@@ -250,6 +170,20 @@
 
 
     });
-
+    function addUser() {
+        const data = {
+            username: document.getElementById('username').value,
+            role : document.getElementById('role').value,
+            password : document.getElementById('password').value,
+        };
+        var url = "http://localhost:8081/api/users";
+        var xhr = new XMLHttpRequest();
+        const searchParams = new URLSearchParams(data);
+        xhr.open("POST", url, true);
+        xhr.send(searchParams);
+        setTimeout(function(){
+            window.location.reload();
+        }, 500);
+    }
 </script>
 </html>

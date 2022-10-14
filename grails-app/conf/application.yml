@@ -8,6 +8,10 @@ grails:
             # Whether to translate GORM events into Reactor events
             # Disabled by default for performance reasons
             events: false
+    controllers:
+        upload:
+            maxFileSize: 10000000
+            maxRequestSize: 10000000
 info:
     app:
         name: '@info.app.name@'
@@ -19,6 +23,11 @@ spring:
     groovy:
         template:
             check-template-location: false
+    http:
+        multipart:
+            enabled: true
+            max-file-size: 50MB
+            max-request-size: 50MB
 
 # Spring Actuator Endpoints are Disabled by Default
 endpoints:
@@ -84,6 +93,7 @@ endpoints:
 
 ---
 hibernate:
+    closureEventTriggeringInterceptorClass: org.grails.orm.hibernate.support.CustomClosureEventTriggeringInterceptor
     cache:
         queries: false
         use_second_level_cache: false
@@ -130,5 +140,5 @@ server:
     port: 8081
     
 illustrations:
-    basePath: C:/Users/gregg/IdeaProjects/mbds-grails-22-23/grails-app/assets/images/
+    basePath: C:/Users/Dj/Desktop/M2/FRAMEWORK GRAILS/grails-lecoincoin-teslek/grails-app/assets/images
     baseUrl: http://localhost:8081/assets/

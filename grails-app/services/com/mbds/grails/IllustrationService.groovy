@@ -1,6 +1,8 @@
 package com.mbds.grails
 
+import com.bertramlabs.plugins.selfie.AttachmentValueConverter
 import grails.gorm.services.Service
+import org.springframework.web.multipart.MultipartFile
 
 @Service(Illustration)
 interface IllustrationService {

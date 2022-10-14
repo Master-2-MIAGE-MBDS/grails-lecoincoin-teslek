@@ -1,7 +1,10 @@
 package com.mbds.grails
 
+import com.bertramlabs.plugins.selfie.AttachmentValueConverter
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import org.springframework.web.multipart.MultipartFile
+
 import static org.springframework.http.HttpStatus.*
 
 class IllustrationController {
@@ -9,7 +12,13 @@ class IllustrationController {
     IllustrationService illustrationService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
+    def upload() {
+        def illustration = new Illustration(params)
+        if(!illustration.save()) {
+            println "Error Saving! ${illustration.errors.allErrors}"
+        }
+        redirect view: "index"
+    }
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond illustrationService.list(params), model:[illustrationCount: illustrationService.count()]

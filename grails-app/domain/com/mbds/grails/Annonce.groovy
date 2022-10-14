@@ -14,7 +14,7 @@ class Annonce {
     static hasMany = [illustrations: Illustration]
 
     static constraints = {
-        title blank: false, nullable: false, size: 5..100
+        title blank: false, nullable: false, size: 1..100
         description blank: false, nullable: false
         price scale: 2, min: 0F, nullable: false
         active nullable: false

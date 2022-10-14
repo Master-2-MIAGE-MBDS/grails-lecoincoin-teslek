@@ -1,6 +1,8 @@
 package com.mbds.grails
 
+import com.bertramlabs.plugins.selfie.AttachmentValueConverter
 import grails.gorm.services.Service
+import org.springframework.web.multipart.MultipartFile
 
 @Service(Annonce)
 interface AnnonceService {
@@ -14,5 +16,6 @@ interface AnnonceService {
     void delete(Serializable id)
 
     Annonce save(Annonce annonce)
+
 
 }

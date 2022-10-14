@@ -23,11 +23,9 @@
                 </a>
             </li>
             <li>
-                <a  onclick="myFunction()" href="/home/AllUsers">
+                <a href="/home/AllUsers">
                     <i class="zmdi zmdi-widgets" ></i>
                     AllUsers
-
-
                 </a>
             </li>
             <li>
