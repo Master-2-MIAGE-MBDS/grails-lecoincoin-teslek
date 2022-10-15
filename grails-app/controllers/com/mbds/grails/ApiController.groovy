@@ -23,6 +23,10 @@ class ApiController {
      */
 
     def annonce() {
+        User user = springSecurityService.currentUser
+        def roleA = Role.findById(1).save()
+        def roleU = Role.findById(2).save()
+        def roleM = Role.findById(3).save()
         // On vérifie qu'un ID ait bien été fourni
         if (!params.id)
             return response.status = 400
@@ -86,8 +90,12 @@ class ApiController {
                 }
                 break;
             case "DELETE":
+
+                if (user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()){
                 annonceInstance.delete(flush:true)
-                annonceInstance.save()
+                annonceInstance.save()}
+                else
+                    render(status: 401, text: 'YOU DONT HAVE RIGHTS')
                 return response.status = 200
                 break;
             default:
