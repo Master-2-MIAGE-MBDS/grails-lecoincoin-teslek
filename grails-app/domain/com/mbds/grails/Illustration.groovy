@@ -9,4 +9,5 @@ class Illustration {
     static constraints = {
         filename nullable: false, blank: false
     }
+
 }

@@ -5,9 +5,10 @@
 <asset:stylesheet src="index.css"/>
 <asset:stylesheet src="admin.css"/>
 <asset:javascript src="Usertab.js"/>
+<asset:javascript src="jquery-2.2.0.min.js"/>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <div id="viewport">
@@ -18,7 +19,7 @@
         </header>
         <ul class="nav">
             <li>
-                <a href="/home/AllUsers">
+                <a href="/home/index">
                     <i class="zmdi zmdi-view-dashboard"></i> Dashboard
                 </a>
             </li>
@@ -98,25 +99,24 @@
                                         <g:each in="${annoncesList}" var="a">
                                             <tr>
                                                 <td></td>
-
                                                 <td>${a.getId() } </td>
                                                 <td></td>
                                                 <td id="auteur${a.getId()}">${a.getAuthor().getUsername()}</td>
                                                 <td></td>
                                                 <td id="titre${a.getId()}">${a.getTitle()}</td>
-
                                                 <td></td>
                                                 <td id="desc${a.getId()}">${a.getDescription()}</td>
-
                                                 <td></td>
                                                 <td id="prix${a.getId()}">${a.getPrice()}</td>
                                                 <td></td>
-
-
-                                                <td> <g:img file="${a.getIllustrations()[0].getFilename()}"/></td>
+                                                <td>
+                                                        <g:each in="${a.getIllustrations()}" var = "i">
+                                                            <a href="#" data-toggle="lightbox" data-gallery="gallery" class="">
+                                                                <g:img dir="images" file="${i.getFilename()}" class="illusAdmin"></g:img>
+                                                            </a>
+                                                        </g:each>
+                                                </td>
                                                 <td></td>
-
-
                                                 <td class="static"><button class="button grey" id="buttonEdit" value="${a.getId()}"><i class="glyphicon glyphicon-pencil"></i></button>
                                             <button type="submit" class="button red" id="Delete_annonce" value="${a.getId()}"  ><i class="glyphicon glyphicon-remove"></i></button></td>
                                             </tr>
@@ -182,71 +182,18 @@
 
 
 <script type="text/javascript">
-    // function myFunction() {
-    //     document.getElementById("panel-2").style.display= "none";
-    //     document.getElementById("panel-1").style.display= "block";
-    // }
-    // function myFunction1() {
-    //     document.getElementById("panel-2").style.display = "block";
-    //     document.getElementById("panel-1").style.display= "none";
-    // }
-
-
-
-
-
-
-
-
-
-
-    // var $table = $('#table');
-    // $(function () {
-    //     $('#toolbar').find('select').change(function () {
-    //         $table.bootstrapTable('refreshOptions', {
-    //             exportDataType: $(this).val()
-    //         });
-    //     });
-    // })
-    // //exporte les données sélectionnées
-    //
-    // var trBoldBlue = $("table");
-    //
-    // $(trBoldBlue).on("click", "tr", function (){
-    //     $(this).toggleClass("bold-blue");
-    // });
-    $("button").click(function() {
-        var button = $(this).val();
-
-        function Delete_Annonce() {
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("DELETE", "http://localhost:8081/api/annonce/" + button, true);
-            xhttp.send();
-
+    $(document).on('click', '#Delete_annonce', function () {
+        var adId = $(this).val();
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", "http://localhost:8081/api/annonce/" + adId, true);
+        xhttp.send();
+        setTimeout(function(){
             window.location.reload();
-        }
-        function Delete_User() {
-
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("DELETE", "http://localhost:8081/api/user/" + button, true);
-            xhttp.send();
-
-            window.location.reload();
-        }
-
-        if (this.id == 'Delete_annonce'){
-            Delete_Annonce()
-        }
-        if (this.id == 'Delete_user'){
-            Delete_User()
-        }
+        }, 700);
     });
-
     $(document).on('click', '#buttonEdit', function (event) {
         var adId = $(this).val();
         alert('auteur'+adId)
-
         document.getElementById('editAuthor').setAttribute('placeholder',document.getElementById('auteur'+adId).textContent)
         document.getElementById('editTitle').setAttribute('placeholder',document.getElementById('titre'+adId).textContent)
         document.getElementById('editPrice').setAttribute('placeholder',document.getElementById('prix'+adId).textContent)
@@ -254,20 +201,6 @@
         document.getElementById('editAd').style.display = "block";
         document.getElementById('Ads').style.display = "none";
     });
-
-    // $.ajax({
-    //   //  title := r.FormValue("button")
-    //
-    //
-    //     url: "http://localhost:8081/api/annonce/"+document.getElementById("Delete").value,
-    //     type: 'DELETE',
-    //     dataType: 'json', // added data type
-    //     success: function(res) {
-    //         console.log(res);
-    //         alert(res);
-    //     }
-    // });
-
 
 </script>
 </html>

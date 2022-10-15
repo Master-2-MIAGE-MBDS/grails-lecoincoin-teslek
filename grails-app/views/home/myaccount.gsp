@@ -151,7 +151,7 @@
                             </g:each>
                         </div>
                         <div class="editContainer" id = 'editAd' style = "display: none">
-                            <div id="editform">
+                            <div id="editform" style = "width: 100%;margin-left: 5px">
                                     <span id="editSpan">
                                         <input type="text" id="editId" name="id" style = "display: none">
                                         <label for="editTitle">Title</label>
@@ -220,6 +220,19 @@
             document.getElementById('add-btn').style.background = '#37474f'
         }
     }
+    function displayHideAddButton(){
+        var btn = document.getElementById('add-btn'),
+            style = window.getComputedStyle(btn),
+            display = style.getPropertyValue('display');
+        if(display === "none"){
+            btn.style.display = "block";
+            document.getElementById('add-btn').style.background = '#a9a9a9'
+        }
+        else {
+            btn.style.display = "none";
+            document.getElementById('add-btn').style.background = '#37474f'
+        }
+    }
 </script>
 
 <script>
@@ -273,6 +286,7 @@
     });
     $(document).on('click', '#buttonEdit', function (event) {
         adId = $(this).val();
+        displayHideAddButton()
         newdiv(adId)
         document.getElementById('editTitle').setAttribute('placeholder',document.getElementById('aId'+adId).textContent)
         document.getElementById('editPrice').setAttribute('placeholder',document.getElementById('priceId'+adId).textContent)
@@ -299,6 +313,7 @@
             title: titleV,
             price : priceV,
             description : descriptionV,
+            illustrations : fns
         };
 
         if(titleV == '' || priceV == '' || descriptionV == '')

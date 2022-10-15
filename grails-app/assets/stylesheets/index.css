@@ -292,8 +292,12 @@ body {
 .illus{
     width: 215px;
     height: 235px;
-}
 
+}
+.illusAdmin{
+    width: 100px;
+    height: 100px;
+}
 
 
 .product-block .product-deatil p.price-container span,
@@ -790,5 +794,15 @@ body {
     #buttonDeleteIlluI {
         color: black;
         background: red;
+    }
+    #submitEditForm{
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
     }
 }

@@ -25,7 +25,7 @@ class ApiController {
             return response.status = 400
         // On vérifie que l'id corresponde bien à une instance existante
         def annonceInstance = Annonce.get(params.id)
-        System.out.println(request.getMethod())
+
         if (!annonceInstance)
             return response.status = 404
 
@@ -35,6 +35,15 @@ class ApiController {
                 renderThis(request.getHeader("Accept"), annonceInstance)
                 break;
             case "PUT":
+                def illus = params.illustrations.split(",")
+                def adillus = annonceInstance.getIllustrations()
+                annonceInstance.illustrations = null
+                for (int i = 0; i < adillus.size(); i++) {
+                    adillus[i].delete(flush: true)
+                }
+                println annonceInstance.getIllustrations()
+                for (int i = 0; i < illus.size(); i++)
+                    annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
                 if(params.title != null || params.price != null || params.description != null) {
                     annonceInstance.title = params.title
                     annonceInstance.price = request.getParameter('price').toFloat()
@@ -43,12 +52,10 @@ class ApiController {
                     return response.status = 200
                 }
                 else
-                {
                     render(status: 400, text: 'NOT ALL FIELD FOUND')
-                }
-
                 break;
             case "PATCH":
+
                 if(params.title != '' && params.price != '' && params.description != '') {
                     render(status: 400, text: 'YOU MEAN PUT ?')
                 }
@@ -57,6 +64,14 @@ class ApiController {
                 }
                 else
                 {
+                    def illus = params.illustrations.split(",")
+                    def adillus = annonceInstance.getIllustrations()
+                    annonceInstance.illustrations = null
+                    for (int i = 0; i < adillus.size(); i++) {
+                        adillus[i].delete(flush: true)
+                    }
+                    for (int i = 0; i < illus.size(); i++)
+                        annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
                     if(params.title != '')
                         annonceInstance.title = params.title
                     if(params.price != '')
@@ -92,7 +107,7 @@ class ApiController {
                 renderThis(request.getHeader("Accept"), annoncesInstance)
                 break;
             case "POST":
-                def annonceInstance = new Annonce(params)
+                def annonceInstance = new Annonce(title: params.title, description: params.description, price: Float.parseFloat(params.price))
                 annonceInstance.setActive(Boolean.TRUE)
                 request.getFiles("illustration").each {
                     def uploadFile = it
@@ -109,16 +124,17 @@ class ApiController {
                         User author = User.findByUsername(params.author)
                         author.addToAnnonces(annonceInstance)
                         author.save(flush:true)
-                        return response.status = 200
+                        def url = createLink(controller: 'home', action: 'AllAds')
+                        render(contentType: 'text/html', text: "<script>window.location.href='$url'</script>",status: 200)
                     }
                 }
                 else {
                     user.addToAnnonces(annonceInstance)
                     user.save(flush: true)
-                    return response.status = 200
+                    def url = createLink(controller: 'home', action: 'myaccount')
+                    render(contentType: 'text/html', text: "<script>window.location.href='$url'</script>",status: 200)
                 }
-                def url = createLink(controller: 'home', action: 'myaccount')
-                render(contentType: 'text/html', text: "<script>window.location.href='$url'</script>")
+
                 break;
             default:
                 return response.status = 405
@@ -145,12 +161,8 @@ class ApiController {
                 break;
 
             case "PUT":
-                System.out.println(userInstance.username)
                 def roleA = Role.findById(1).save()
                 def roleU = Role.findById(2).save()
-                System.out.println(roleA.getAuthority() + " " + roleU.getAuthority())
-                System.out.println(params.username)
-                System.out.println(params.password)
                 userInstance.setUsername(params.username)
                 userInstance.setPassword(params.password)
                 if(params.role == "Admin" ||params.role == "admin" ) {
@@ -161,9 +173,7 @@ class ApiController {
                     UserRole.remove(userInstance, roleA)
                     UserRole.create(userInstance, roleU, true)
                 }
-                System.out.println(userInstance.username)
                 userInstance.save(flush : true)
-                System.out.println(userInstance.username)
                 return response.status = 200
                 break;
             case "PATCH":
@@ -203,8 +213,10 @@ class ApiController {
                     role = Role.findById(3)
                 else
                     render(status: 400, text: 'ROLE DOES NOT EXIST')
-
-                def userInstance = new User(params).save()
+                AES a = new AES()
+                String decrypt =  a.decryptText(request.getParameter('password'),"My Secret Passphrase")
+                def userInstance = new User(username: params.username , password: decrypt)
+                userInstance.save(flush : true)
                 UserRole.create(userInstance, role , true)
                 return response.status = 200
                 break;
