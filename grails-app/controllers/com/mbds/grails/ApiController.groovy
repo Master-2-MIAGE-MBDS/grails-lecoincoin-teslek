@@ -42,55 +42,62 @@ class ApiController {
                 renderThis(request.getHeader("Accept"), annonceInstance)
                 break;
             case "PUT":
-                def illus = params.illustrations.split(",")
-                def adillus = annonceInstance.getIllustrations()
-                annonceInstance.illustrations = null
-                for (int i = 0; i < adillus.size(); i++) {
-                    adillus[i].delete(flush: true)
-                }
-                println annonceInstance.getIllustrations()
-                for (int i = 0; i < illus.size(); i++)
-                    annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
-                if(params.title != '' || params.price != '' || params.description != '') {
-                    annonceInstance.title = params.title
-                    annonceInstance.price = request.getParameter('price').toFloat()
-                    annonceInstance.description = params.description
-                    annonceInstance.save(flush: true)
-                    return response.status = 200
+
+                if (user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
+                    if (!params.illustration == '') {
+                    def illus = params.illustrations.split(",")
+                    def adillus = annonceInstance.getIllustrations()
+                    annonceInstance.illustrations = null
+                    for (int i = 0; i < adillus.size(); i++) {
+                        adillus[i].delete(flush: true)
+                    }
+                    println annonceInstance.getIllustrations()
+                    for (int i = 0; i < illus.size(); i++)
+                        annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
+                    }
+                    if (params.title != '' || params.price != '' || params.description != '') {
+                        annonceInstance.title = params.title
+                        annonceInstance.price = request.getParameter('price').toFloat()
+                        annonceInstance.description = params.description
+                        annonceInstance.save(flush: true)
+                        return response.status = 200
+                    } else
+                        render(status: 400, text: 'NOT ALL FIELD FOUND')
                 }
                 else
-                    render(status: 400, text: 'NOT ALL FIELD FOUND')
+                    render(status: 400, text: 'YOU DONT HAVE RIGHTS')
                 break;
             case "PATCH":
+                if(user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
+                    if (params.title != '' && params.price != '' && params.description != '' && params.description != '') {
+                        render(status: 400, text: 'YOU MEAN PUT ?')
+                    } else if (params.title == '' && params.price == '' && params.description == '') {
+                        render(status: 400, text: 'NO FIELDS WERE FOUND')
+                    } else {
 
-                if(params.title != '' && params.price != '' && params.description != '' && params.description != '') {
-                    render(status: 400, text: 'YOU MEAN PUT ?')
-                }
-                else if(params.title == '' && params.price == '' && params.description == ''){
-                    render(status: 400, text: 'NO FIELDS WERE FOUND')
+                        if (!params.illustration == '') {
+                            def illus = params.illustrations.split(",")
+                            def adillus = annonceInstance.getIllustrations()
+                            annonceInstance.illustrations = null
+                            for (int i = 0; i < adillus.size(); i++) {
+                                adillus[i].delete(flush: true)
+                            }
+                            for (int i = 0; i < illus.size(); i++)
+                                annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
+                        }
+                        if (params.title != '')
+                            annonceInstance.title = params.title
+                        if (params.price != '')
+                            annonceInstance.price = request.getParameter('price').toFloat()
+                        if (params.description != '')
+                            annonceInstance.description = params.description
+                        annonceInstance.save(flush: true)
+                        return response.status = 200
+                    }
                 }
                 else
-                {
+                    render(status: 400, text: 'YOU DONT HAVE RIGHTS')
 
-                    if( !params.illustration =='') {
-                        def illus = params.illustrations.split(",")
-                        def adillus = annonceInstance.getIllustrations()
-                        annonceInstance.illustrations = null
-                        for (int i = 0; i < adillus.size(); i++) {
-                            adillus[i].delete(flush: true)
-                        }
-                        for (int i = 0; i < illus.size(); i++)
-                            annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
-                    }
-                    if(params.title != '')
-                        annonceInstance.title = params.title
-                    if(params.price != '')
-                        annonceInstance.price = request.getParameter('price').toFloat()
-                    if(params.description != '')
-                        annonceInstance.description = params.description
-                    annonceInstance.save(flush : true)
-                    return response.status = 200
-                }
                 break;
             case "DELETE":
 
