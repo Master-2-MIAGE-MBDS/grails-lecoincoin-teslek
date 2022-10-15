@@ -71,14 +71,17 @@ class ApiController {
                 }
                 else
                 {
-                    def illus = params.illustrations.split(",")
-                    def adillus = annonceInstance.getIllustrations()
-                    annonceInstance.illustrations = null
-                    for (int i = 0; i < adillus.size(); i++) {
-                        adillus[i].delete(flush: true)
+
+                    if( !params.illustration =='') {
+                        def illus = params.illustrations.split(",")
+                        def adillus = annonceInstance.getIllustrations()
+                        annonceInstance.illustrations = null
+                        for (int i = 0; i < adillus.size(); i++) {
+                            adillus[i].delete(flush: true)
+                        }
+                        for (int i = 0; i < illus.size(); i++)
+                            annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
                     }
-                    for (int i = 0; i < illus.size(); i++)
-                        annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
                     if(params.title != '')
                         annonceInstance.title = params.title
                     if(params.price != '')
@@ -219,6 +222,7 @@ class ApiController {
                 else {
 
                     if (params.role) {
+
                         if ((params.role == "Admin" ||params.role == "admin") && user.getAuthorities()[0] == roleA) {
                             UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                             UserRole.create(userInstance, roleA)
@@ -247,6 +251,9 @@ class ApiController {
                             userInstance.setPassword(params.password)
 
                     }
+                    else
+                        userInstance.save(flush : true )
+
                     return response.status = 200
 
                 }
