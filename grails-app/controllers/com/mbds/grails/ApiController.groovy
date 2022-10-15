@@ -163,15 +163,20 @@ class ApiController {
             case "PUT":
                 def roleA = Role.findById(1).save()
                 def roleU = Role.findById(2).save()
+                def roleM = Role.findById(3).save()
                 userInstance.setUsername(params.username)
                 userInstance.setPassword(params.password)
                 if(params.role == "Admin" ||params.role == "admin" ) {
-                    UserRole.remove(userInstance, roleU)
+                    UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                     UserRole.create (userInstance, roleA )
                 }
                 if(params.role == "User" ||params.role == "user" ){
-                    UserRole.remove(userInstance, roleA)
+                    UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                     UserRole.create(userInstance, roleU, true)
+                }
+                if(params.role == "Moderator" ||params.role == "moderator" ){
+                    UserRole.remove(userInstance, userInstance.getAuthorities()[0])
+                    UserRole.create(userInstance, roleM, true)
                 }
                 userInstance.save(flush : true)
                 return response.status = 200
@@ -209,7 +214,7 @@ class ApiController {
                     role = Role.findById(1)
                 else if(params.role.toLowerCase() == 'user')
                     role = Role.findById(2)
-                else if(params.role.toLowerCase() == 'modo')
+                else if(params.role.toLowerCase() == 'moderator')
                     role = Role.findById(3)
                 else
                     render(status: 400, text: 'ROLE DOES NOT EXIST')

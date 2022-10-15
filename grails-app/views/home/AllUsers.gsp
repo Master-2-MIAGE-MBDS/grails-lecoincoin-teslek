@@ -55,7 +55,7 @@
 
 
                 </sec:ifAnyGranted>
-                <sec:ifAnyGranted roles="ROLE_ADMIN">
+                <sec:ifAnyGranted roles="ROLE_ADMIN , ROLE_MODERATOR">
                     <div class="container">
                         <section id="Users">
                             <div class="container">
@@ -74,6 +74,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                       <sec:ifAnyGranted roles="ROLE_ADMIN">
                                             <tr class="first-tr">
                                                 <td class="title-td"><span>Add New</span></td>
                                                 <td></td>
@@ -87,6 +88,7 @@
 
                                                 <td class="static"><button onclick="addUser()" class="button green" id="buttonAdd"><i class="glyphicon glyphicon-ok"></i></button></td>
                                             </tr>
+                       </sec:ifAnyGranted>
                                         <g:each in="${usersList}" var="c">
                                             <tr>
                                                 <td></td>
@@ -98,7 +100,7 @@
                                                 <td>${c.getAnnonces()}</td>
                                                 <td></td>
                                                 <td></td>
-                                                <td class="static"><button class="button grey" id="buttonEdit" value="${c.getId()}"><i class="glyphicon glyphicon-pencil"></i></button><sec:ifAnyGranted roles="ROLE_USER"><button class="button red" id="Delete_user" value="${c.getId()}" ><i class="glyphicon glyphicon-remove"></i></button></sec:ifAnyGranted></td>
+                                                <td class="static"><button class="button grey" id="buttonEdit" value="${c.getId()}"><i class="glyphicon glyphicon-pencil"></i></button><sec:ifAnyGranted roles="ROLE_ADMIN"><button class="button red" id="Delete_user" value="${c.getId()}" ><i class="glyphicon glyphicon-remove"></i></button></sec:ifAnyGranted></td>
                                             </tr>
                                         </g:each>
 

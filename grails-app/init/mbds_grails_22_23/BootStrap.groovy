@@ -12,6 +12,8 @@ class BootStrap {
         def adminUserInstance = new User(username: "admin",password: "admin").save()
         def adminRole = new Role(authority: "ROLE_ADMIN").save()
         def userRole = new Role(authority: "ROLE_USER").save()
+        def ModRole = new Role(authority: "ROLE_MODERATOR").save()
+
         UserRole.create(adminUserInstance, adminRole, true)
 
         // On boucle sur une liste de 5 prénoms

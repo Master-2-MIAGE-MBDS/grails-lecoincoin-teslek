@@ -22,7 +22,7 @@
                         Home
                     </a>
                 </sec:ifAnyGranted>
-                <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODO">
+                <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODERATOR">
                     <a href="/home/index">
                         <i class="zmdi zmdi-view-dashboard"></i>
                         Dashboard
@@ -36,7 +36,7 @@
                             My Account
                     </a>
                 </sec:ifAnyGranted>
-                <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODO">
+                <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODERATOR">
                     <a href="/home/AllUsers" >
                         <i  class="zmdi zmdi-widgets" ></i>
                             All Users
@@ -45,7 +45,7 @@
 
             </li>
 
-            <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODO">
+            <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODERATOR">
                 <li>
                     <a href="/home/AllAds" >
                         <i class="zmdi zmdi-calendar"></i>
@@ -72,7 +72,7 @@
         </nav>
         <div class="container-fluid" >
             <sec:ifLoggedIn>
-                <sec:ifAnyGranted roles="ROLE_USER, ROLE_ADMIN">
+                <sec:ifAnyGranted roles="ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR">
                     <section id = "panel-user-2">
                         <div class="container">
                             <g:each in="${annoncesList}" var="c">

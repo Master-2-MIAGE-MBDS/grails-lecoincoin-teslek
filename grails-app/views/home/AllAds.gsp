@@ -56,7 +56,7 @@
                             </main>
                         </section>
                         <section id="panel-2">
-    <sec:ifAnyGranted roles="ROLE_ADMIN">
+    <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODERATOR">
                             <div class="container" id="Ads">
                                 <main id="table1">
                                     <table class="table">
@@ -78,6 +78,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <sec:ifAnyGranted roles="ROLE_ADMIN">
                                           <g:uploadForm controller = "api" action = "annonces" enctype="multipart/form-data">
                                             <tr class="first-tr">
                                                 <td class="title-td"><span>Add New</span></td>
@@ -96,6 +97,7 @@
                                                 <td class="static"><button type="submit" class="button green"><i class="glyphicon glyphicon-ok"></i></button></td>
                                             </tr>
                                           </g:uploadForm>
+                                            </sec:ifAnyGranted>
                                         <g:each in="${annoncesList}" var="a">
                                             <tr>
                                                 <td></td>
@@ -118,7 +120,7 @@
                                                 </td>
                                                 <td></td>
                                                 <td class="static"><button class="button grey" id="buttonEdit" value="${a.getId()}"><i class="glyphicon glyphicon-pencil"></i></button>
-                                            <button type="submit" class="button red" id="Delete_annonce" value="${a.getId()}"  ><i class="glyphicon glyphicon-remove"></i></button></td>
+                                            <sec:ifAnyGranted roles="ROLE_ADMIN"> <button type="submit" class="button red" id="Delete_annonce" value="${a.getId()}"  ><i class="glyphicon glyphicon-remove"></i></button></sec:ifAnyGranted></td>
                                             </tr>
                                         </g:each>
 

@@ -5,7 +5,7 @@ import grails.validation.ValidationException
 import groovy.json.JsonBuilder
 
 import static org.springframework.http.HttpStatus.*
-@Secured(['ROLE_ADMIN','ROLE_USER', 'ROLE_MODO'])
+@Secured(['ROLE_ADMIN','ROLE_USER', 'ROLE_MODERATOR'])
 class HomeController {
     def springSecurityService
     def index() {
