@@ -101,22 +101,22 @@
                                         <g:each in="${annoncesList}" var="a">
                                             <tr>
                                                 <td></td>
-                                                <td>${a.getId() } </td>
+                                                <td><a href = "/home/ad/${a.getId()}">${a.getId() }</a></td>
                                                 <td></td>
-                                                <td id="auteur${a.getId()}">${a.getAuthor().getUsername()}</td>
+                                                <td id="auteur${a.getId()}"><a href = "/home/ad/${a.getId()}">${a.getAuthor().getUsername()}</a></td>
                                                 <td></td>
-                                                <td id="titre${a.getId()}">${a.getTitle()}</td>
+                                                <td id="titre${a.getId()}"><a href = "/home/ad/${a.getId()}">${a.getTitle()}</a></td>
                                                 <td></td>
                                                 <td id="desc${a.getId()}">${a.getDescription()}</td>
                                                 <td></td>
                                                 <td id="prix${a.getId()}">${a.getPrice()}</td>
                                                 <td></td>
                                                 <td>
+                                                    <div class="grid-container">
                                                         <g:each in="${a.getIllustrations()}" var = "i">
-                                                            <a href="#" data-toggle="lightbox" data-gallery="gallery" class="">
-                                                                <g:img dir="images" file="${i.getFilename()}" class="illusAdmin"></g:img>
-                                                            </a>
+                                                            <g:img dir="images" file="${i.getFilename()}" class="illusAdmin"></g:img>
                                                         </g:each>
+                                                    </div>
                                                 </td>
                                                 <td></td>
                                                 <td class="static"><button class="button grey" id="buttonEdit" value="${a.getId()}"><i class="glyphicon glyphicon-pencil"></i></button>
@@ -137,7 +137,7 @@
 
         </section>
         <div class="editContainer" id = 'editAd' style = "display: none">
-            <div id="editform">
+            <div id="editform" style ="margin-left: 10px">
                 <g:uploadForm controller = "api" action = "annonces" enctype="multipart/form-data">
                     <span>
                         <label for="editAuthor">Auteur</label>
@@ -161,7 +161,8 @@
                         <input type="submit" value="EDIT">
                     </span>
                 </g:uploadForm>
-                <button id="buttonCancel" class="buttonED" style = "background-color: orangered;color: white;font-size: 1rem;" >Cancel</button>
+                <br>
+                <button id="buttonCancel" class="buttonED" style = "background-color: orangered;color: white;font-size: 1rem;" onclick="cancel();">Cancel</button>
             </div>
 
         </div>
@@ -195,7 +196,7 @@
     });
     $(document).on('click', '#buttonEdit', function (event) {
         var adId = $(this).val();
-        alert('auteur'+adId)
+
         document.getElementById('editAuthor').setAttribute('placeholder',document.getElementById('auteur'+adId).textContent)
         document.getElementById('editTitle').setAttribute('placeholder',document.getElementById('titre'+adId).textContent)
         document.getElementById('editPrice').setAttribute('placeholder',document.getElementById('prix'+adId).textContent)
@@ -203,6 +204,9 @@
         document.getElementById('editAd').style.display = "block";
         document.getElementById('Ads').style.display = "none";
     });
-
+    function cancel(){
+        document.getElementById('editAd').style.display = "none";
+        document.getElementById('Ads').style.display = "block";
+    }
 </script>
 </html>

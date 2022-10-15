@@ -97,7 +97,13 @@
                                                 <td id="auteur${c.getId()}">${c.getUsername()}</td>
                                                 <td id="role${c.getId()}">${c.getAuthorities()}</td>
                                                 <td id="password${c.getId()}">*********</td>
-                                                <td>${c.getAnnonces()}</td>
+                                                <td>
+                                                    <g:each in="${c.getAnnonces()}" var="x">
+                                                        <a href = "/home/ad/${c.getId()}">
+                                                            ${x.getId()}
+                                                        </a>
+                                                    </g:each>
+                                                </td>
                                                 <td></td>
                                                 <td></td>
                                                 <td class="static"><button class="button grey" id="buttonEdit" value="${c.getId()}"><i class="glyphicon glyphicon-pencil"></i></button><sec:ifAnyGranted roles="ROLE_ADMIN"><button class="button red" id="Delete_user" value="${c.getId()}" ><i class="glyphicon glyphicon-remove"></i></button></sec:ifAnyGranted></td>
@@ -117,7 +123,7 @@
 
                         </section>
                         <div class="editContainer" id = 'editUser' style = "display: none">
-                            <div id="editform">
+                            <div id="editform" style = "margin-left: 15px">
                                     <span>
                                         <input type="text" id="editId" name="id" style = "display: none">
                                         <label for="editusername">Username</label>
@@ -131,7 +137,7 @@
                                         <br><br>
                                         <button type="submit" id = 'submitEditForm' onclick = 'patchUs()'>EDIT</button>
                                     </span>
-                                <button id="buttonCancel" class="buttonED" style = "background-color: orangered;color: white;font-size: 1rem;" >Cancel</button>
+                                <button id="buttonCancel" class="buttonED" style = "background-color: orangered;color: white;font-size: 1rem;" onclick="cancel()">Cancel</button>
                             </div>
                         </div>
 
@@ -147,7 +153,10 @@
 </div>
 </body>
 <script type="text/javascript">
-
+    function cancel(){
+        document.getElementById('editUser').style.display = "none";
+        document.getElementById('Users').style.display = "block";
+    }
     $(document).on('click', '#Delete_user', function () {
         var userId = $(this).val();
         var xhttp = new XMLHttpRequest();
@@ -159,13 +168,10 @@
     });
     $(document).on('click', '#buttonEdit', function (event) {
         var UsId = $(this).val();
-
-        // document.getElementById('editAuthor').setAttribute('placeholder',document.getElementById('auteur'+adId).textContent)
-        // document.getElementById('editTitle').setAttribute('placeholder',document.getElementById('titre'+adId).textContent)
-        // document.getElementById('editPrice').setAttribute('placeholder',document.getElementById('prix'+adId).textContent)
-        // document.getElementById('editDescription').setAttribute('placeholder',document.getElementById('desc'+adId).textContent)
+        document.getElementById('editusername').setAttribute('placeholder',document.getElementById('auteur'+UsId).textContent)
+        document.getElementById('editrole').setAttribute('placeholder',document.getElementById('role'+UsId).textContent)
+        document.getElementById('editpassword').setAttribute('placeholder',document.getElementById('password'+UsId).textContent)
         document.getElementById('editId').value = UsId
-
         document.getElementById('editUser').style.display = "block";
         document.getElementById('Users').style.display = "none";
 
@@ -195,12 +201,12 @@
         var usernameV= document.getElementById('editusername').value;
         var passwordV = document.getElementById('editpassword').value;
         var roleV = document.getElementById('editrole').value;
+        alert(passwordV)
         const data = {
             id: UsId,
             username :usernameV,
             password: passwordV,
             role : roleV,
-
         };
 
         if(usernameV == '' || passwordV == '' || roleV == '')

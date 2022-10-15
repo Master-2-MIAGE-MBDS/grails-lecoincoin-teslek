@@ -38,4 +38,8 @@ class HomeController {
         List<Annonce> annonces = Annonce.findAll()
         [annoncesList: annonces, usersList: users]
     }
+    def ad(Long id) {
+        Annonce adInstance = Annonce.findById(id)
+        [ad : adInstance]
+    }
 }

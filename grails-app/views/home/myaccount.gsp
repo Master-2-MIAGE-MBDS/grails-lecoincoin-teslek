@@ -125,7 +125,8 @@
                                             <div class="col-md-7 col-sm-12 col-xs-12">
                                                 <div class="product-deatil">
                                                     <h5 class="name">
-                                                        <a id="aId${c.getId()}">${c.getTitle()}</a>
+                                                        <a href = "/home/ad/${c.getId()}" id="aId${c.getId()}">${c.getTitle()}
+                                                        </a>
                                                         <br>
                                                         <a>
                                                             <span>Tag</span>

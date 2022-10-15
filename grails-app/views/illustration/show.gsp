@@ -1,4 +1,3 @@
-<%@ page import="com.mbds.grails.User" %>
 <!DOCTYPE html>
 <html>
     <head>

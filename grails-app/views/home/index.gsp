@@ -105,16 +105,16 @@
                                             <div class="col-md-7 col-sm-12 col-xs-12">
                                                 <div class="product-deatil">
                                                     <h5 class="name">
-                                                        <a>
+                                                        <a href = "/home/ad/${c.getId()}">
                                                             ${c.getTitle()}
                                                         </a>
                                                         <a>
-                                                            <span>Tag</span>
+                                                            <span><br></span>
                                                         </a>
 
                                                     </h5>
                                                     <p class="price-container">
-                                                        <span>${c.getPrice()}</span>
+                                                        <span>${c.getPrice()}$</span>
                                                     </p>
                                                     <span class="tag1"></span>
                                                 </div>
