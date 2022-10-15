@@ -13,7 +13,10 @@ import java.nio.file.Path
 
 @Secured(['ROLE_USER','ROLE_ADMIN','ROLE_MODERATOR'])
 class ApiController {
+
+
     def springSecurityService
+
     /**
      * Singleton
      * Gestion des points d'entrée : GET / PUT / PATCH / DELETE
@@ -44,7 +47,7 @@ class ApiController {
                 println annonceInstance.getIllustrations()
                 for (int i = 0; i < illus.size(); i++)
                     annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
-                if(params.title != null || params.price != null || params.description != null) {
+                if(params.title != '' || params.price != '' || params.description != '') {
                     annonceInstance.title = params.title
                     annonceInstance.price = request.getParameter('price').toFloat()
                     annonceInstance.description = params.description
@@ -56,7 +59,7 @@ class ApiController {
                 break;
             case "PATCH":
 
-                if(params.title != '' && params.price != '' && params.description != '') {
+                if(params.title != '' && params.price != '' && params.description != '' && params.description != '') {
                     render(status: 400, text: 'YOU MEAN PUT ?')
                 }
                 else if(params.title == '' && params.price == '' && params.description == ''){
@@ -100,8 +103,8 @@ class ApiController {
      */
 
     def annonces() {
+        User user = springSecurityService.getCurrentUser()
         def annoncesInstance = Annonce.getAll()
-        User user = springSecurityService.currentUser
         switch (request.getMethod()) {
             case "GET":
                 renderThis(request.getHeader("Accept"), annoncesInstance)
@@ -148,6 +151,7 @@ class ApiController {
 
 
     def user() {
+        User user = springSecurityService.currentUser
         def roleA = Role.findById(1).save()
         def roleU = Role.findById(2).save()
         def roleM = Role.findById(3).save()
@@ -164,25 +168,40 @@ class ApiController {
                 break;
 
             case "PUT":
+                System.out.println(user.getAuthorities()[0])
 
-                userInstance.setUsername(params.username)
-                userInstance.setPassword(params.password)
-                if(params.role == "Admin" ||params.role == "admin" ) {
+                if ((params.role == "Admin" || params.role == "admin") && user.getAuthorities()[0] == roleA) {
+                    userInstance.setUsername(params.username)
+                    userInstance.setPassword(params.password)
                     UserRole.remove(userInstance, userInstance.getAuthorities()[0])
-                    UserRole.create (userInstance, roleA )
-                }
-                if(params.role == "User" ||params.role == "user" ){
-                    UserRole.remove(userInstance, userInstance.getAuthorities()[0])
-                    UserRole.create(userInstance, roleU, true)
-                }
-                if(params.role == "Moderator" ||params.role == "moderator" ){
-                    UserRole.remove(userInstance, userInstance.getAuthorities()[0])
-                    UserRole.create(userInstance, roleM, true)
-                }
-                userInstance.save(flush : true)
+                    UserRole.create(userInstance, roleA)
+                } else {
+
+                        if ((params.role == "User" || params.role == "user") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
+                            userInstance.setUsername(params.username)
+                            userInstance.setPassword(params.password)
+                            UserRole.remove(userInstance, userInstance.getAuthorities()[0])
+                            UserRole.create(userInstance, roleU, true)
+                        }
+                        else {
+                            if ((params.role == "Moderator" || params.role == "moderator") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
+                                userInstance.setUsername(params.username)
+                                userInstance.setPassword(params.password)
+                                UserRole.remove(userInstance, userInstance.getAuthorities()[0])
+                                UserRole.create(userInstance, roleM, true)
+                            } else {
+                                if (params.role == "Moderator" || params.role == "moderator" || params.role == "User" || params.role == "user" || params.role == "Admin" || params.role == "admin")
+                                    render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+                                else
+                                render(status: 400, text: 'ROLE DOES NOT EXIST')
+                            }
+                        }
+        }
+                    userInstance.save(flush : true)
                 return response.status = 200
                 break;
             case "PATCH":
+
                 if(params.username != '' && params.password!= '' && params.role != '') {
                     render(status: 400, text: 'YOU MEAN PUT ?')
                 }
@@ -190,24 +209,34 @@ class ApiController {
                     render(status: 400, text: 'NO FIELDS WERE FOUND')
                 }
                 else {
-                    if (params.username)
-                        userInstance.setUsername(params.username)
-                    if (params.password)
-                        userInstance.setPassword(params.password)
+
                     if (params.role) {
-                        if (params.role == "Admin" || params.role == "admin") {
+                        if ((params.role == "Admin" ||params.role == "admin") && user.getAuthorities()[0] == roleA) {
                             UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                             UserRole.create(userInstance, roleA)
                         }
-                        if (params.role == "User" || params.role == "user") {
-                            UserRole.remove(userInstance, userInstance.getAuthorities()[0])
-                            UserRole.create(userInstance, roleU, true)
-                        }
-                        if (params.role == "Moderator" || params.role == "moderator") {
-                            UserRole.remove(userInstance, userInstance.getAuthorities()[0])
-                            UserRole.create(userInstance, roleM, true)
-                        }
+                        else {
 
+                            if ((params.role == "User" || params.role == "user") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
+                                UserRole.remove(userInstance, userInstance.getAuthorities()[0])
+                                UserRole.create(userInstance, roleU, true)
+                            } else {
+                                if ((params.role == "Moderator" || params.role == "moderator") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
+                                    UserRole.remove(userInstance, userInstance.getAuthorities()[0])
+                                    UserRole.create(userInstance, roleM, true)
+                                } else {
+                                    if (params.role == "Moderator" || params.role == "moderator" || params.role == "User" || params.role == "user" ||params.role == "Admin" ||params.role == "admin" )
+                                       render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+                                    else
+                                    render(status: 400, text: 'ROLE DOES NOT EXIST')
+
+                                }
+                            }
+                        }
+                        if (params.username)
+                            userInstance.setUsername(params.username)
+                        if (params.password)
+                            userInstance.setPassword(params.password)
 
                     }
                     return response.status = 200
@@ -218,9 +247,14 @@ class ApiController {
 
                 break;
             case "DELETE":
+                if (user.getAuthorities()[0] == roleA){
                 UserRole.remove(userInstance,UserRole.findByUser(userInstance).getRole())
                 userInstance.delete(flush : true)
-                return response.status = 200
+                    return response.status = 200}
+                else
+                    render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+
+
                 break;
             default:
                 return response.status = 405
@@ -232,6 +266,10 @@ class ApiController {
     }
 
     def users() {
+        User user = springSecurityService.currentUser
+        def roleA = Role.findById(1).save()
+        def roleU = Role.findById(2).save()
+        def roleM = Role.findById(3).save()
 
         def usersInstance = User.getAll()
         switch (request.getMethod()) {
@@ -241,18 +279,27 @@ class ApiController {
                 break;
             case "POST":
                 def role = null
-                if(params.role.toLowerCase() == 'admin')
+                if(params.role.toLowerCase() == 'admin' && user.getAuthorities()[0] == roleA )
                     role = Role.findById(1)
-                else if(params.role.toLowerCase() == 'user')
-                    role = Role.findById(2)
-                else if(params.role.toLowerCase() == 'moderator')
-                    role = Role.findById(3)
-                else
-                    render(status: 400, text: 'ROLE DOES NOT EXIST')
+                else {
+                    if (params.role.toLowerCase() == 'user' && user.getAuthorities()[0] == roleA )
+                        role = Role.findById(2)
+                    else {
+                        if (params.role.toLowerCase() == 'moderator' && user.getAuthorities()[0] == roleA )
+                            role = Role.findById(3)
+                        else {
+                            if (params.role.toLowerCase() == 'admin' || params.role.toLowerCase() == 'user' || params.role.toLowerCase() == 'moderator')
+                                render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+                            else
+                            render(status: 400, text: 'ROLE DOES NOT EXIST')
+                        }
+                    }
+                }
+
                 AES a = new AES()
                 System.out.println(request.getParameter('password'))
                 String decrypt =  a.decryptText(request.getParameter('password'),"My Secret Passphrase")
-                def userInstance = new User(username: params.username , password: decrypt)
+                def userInstance = new User(username: params.username , password:decrypt)
                 userInstance.save(flush : true)
                 UserRole.create(userInstance, role , true)
                 return response.status = 200
