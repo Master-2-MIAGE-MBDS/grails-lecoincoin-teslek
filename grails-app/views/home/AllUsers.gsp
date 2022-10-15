@@ -118,8 +118,8 @@
                         </section>
                         <div class="editContainer" id = 'editUser' style = "display: none">
                             <div id="editform">
-                                <g:uploadForm controller = "api" action = "users" enctype="multipart/form-data">
                                     <span>
+                                        <input type="text" id="editId" name="id" style = "display: none">
                                         <label for="editusername">Username</label>
                                         <input type="text" id="editusername" name="username" placeholder="">
                                         <br>
@@ -129,9 +129,8 @@
                                         <br>
                                         <input type="text" id="editrole" name="role" placeholder="">
                                         <br><br>
-                                        <input type="submit" value="EDIT">
+                                        <button type="submit" id = 'submitEditForm' onclick = 'patchUs()'>EDIT</button>
                                     </span>
-                                </g:uploadForm>
                                 <button id="buttonCancel" class="buttonED" style = "background-color: orangered;color: white;font-size: 1rem;" >Cancel</button>
                             </div>
                         </div>
@@ -159,12 +158,14 @@
         }, 700);
     });
     $(document).on('click', '#buttonEdit', function (event) {
-        var adId = $(this).val();
+        var UsId = $(this).val();
 
         // document.getElementById('editAuthor').setAttribute('placeholder',document.getElementById('auteur'+adId).textContent)
         // document.getElementById('editTitle').setAttribute('placeholder',document.getElementById('titre'+adId).textContent)
         // document.getElementById('editPrice').setAttribute('placeholder',document.getElementById('prix'+adId).textContent)
         // document.getElementById('editDescription').setAttribute('placeholder',document.getElementById('desc'+adId).textContent)
+        document.getElementById('editId').value = UsId
+
         document.getElementById('editUser').style.display = "block";
         document.getElementById('Users').style.display = "none";
 
@@ -182,6 +183,45 @@
         const searchParams = new URLSearchParams(data);
         xhr.open("POST", url, true);
         xhr.send(searchParams);
+        setTimeout(function(){
+            window.location.reload();
+        }, 500);
+    }
+
+
+
+    function patchUs(){
+        var UsId = document.getElementById('editId').value;
+        var usernameV= document.getElementById('editusername').value;
+        var passwordV = document.getElementById('editpassword').value;
+        var roleV = document.getElementById('editrole').value;
+        const data = {
+            id: UsId,
+            username :usernameV,
+            password: passwordV,
+            role : roleV,
+
+        };
+
+        if(usernameV == '' || passwordV == '' || roleV == '')
+        {
+            var url = "http://localhost:8081/api/user";
+            var xhr = new XMLHttpRequest();
+            const searchParams = new URLSearchParams(data);
+
+            xhr.open("PATCH", url, true);
+            xhr.send(searchParams);
+
+        }
+        else {
+            var url = "http://localhost:8081/api/user";
+            var xhr = new XMLHttpRequest();
+            const searchParams = new URLSearchParams(data);
+
+            xhr.open("PUT", url, true);
+            xhr.send(searchParams);
+
+        }
         setTimeout(function(){
             window.location.reload();
         }, 500);

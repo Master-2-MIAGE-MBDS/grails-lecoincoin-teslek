@@ -11,7 +11,7 @@ import org.springframework.web.multipart.support.StandardMultipartHttpServletReq
 import java.nio.file.Path
 
 
-@Secured(['ROLE_USER','ROLE_ADMIN'])
+@Secured(['ROLE_USER','ROLE_ADMIN','ROLE_MODERATOR'])
 class ApiController {
     def springSecurityService
     /**
@@ -148,6 +148,9 @@ class ApiController {
 
 
     def user() {
+        def roleA = Role.findById(1).save()
+        def roleU = Role.findById(2).save()
+        def roleM = Role.findById(3).save()
         // On vérifie qu'un ID ait bien été fourni
         // On vérifie que l'id corresponde bien à une instance existante
         def userInstance = User.findById(params.id)
@@ -161,9 +164,7 @@ class ApiController {
                 break;
 
             case "PUT":
-                def roleA = Role.findById(1).save()
-                def roleU = Role.findById(2).save()
-                def roleM = Role.findById(3).save()
+
                 userInstance.setUsername(params.username)
                 userInstance.setPassword(params.password)
                 if(params.role == "Admin" ||params.role == "admin" ) {
@@ -182,9 +183,39 @@ class ApiController {
                 return response.status = 200
                 break;
             case "PATCH":
-                if(params.title){
+                if(params.username != '' && params.password!= '' && params.role != '') {
+                    render(status: 400, text: 'YOU MEAN PUT ?')
+                }
+                else if(params.username == '' && params.password == '' && params.role == ''){
+                    render(status: 400, text: 'NO FIELDS WERE FOUND')
+                }
+                else {
+                    if (params.username)
+                        userInstance.setUsername(params.username)
+                    if (params.password)
+                        userInstance.setPassword(params.password)
+                    if (params.role) {
+                        if (params.role == "Admin" || params.role == "admin") {
+                            UserRole.remove(userInstance, userInstance.getAuthorities()[0])
+                            UserRole.create(userInstance, roleA)
+                        }
+                        if (params.role == "User" || params.role == "user") {
+                            UserRole.remove(userInstance, userInstance.getAuthorities()[0])
+                            UserRole.create(userInstance, roleU, true)
+                        }
+                        if (params.role == "Moderator" || params.role == "moderator") {
+                            UserRole.remove(userInstance, userInstance.getAuthorities()[0])
+                            UserRole.create(userInstance, roleM, true)
+                        }
+
+
+                    }
+                    return response.status = 200
 
                 }
+
+
+
                 break;
             case "DELETE":
                 UserRole.remove(userInstance,UserRole.findByUser(userInstance).getRole())
@@ -219,6 +250,7 @@ class ApiController {
                 else
                     render(status: 400, text: 'ROLE DOES NOT EXIST')
                 AES a = new AES()
+                System.out.println(request.getParameter('password'))
                 String decrypt =  a.decryptText(request.getParameter('password'),"My Secret Passphrase")
                 def userInstance = new User(username: params.username , password: decrypt)
                 userInstance.save(flush : true)
