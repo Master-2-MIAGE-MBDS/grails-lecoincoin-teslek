@@ -122,46 +122,53 @@ class ApiController {
 
     def annonces() {
         User user = springSecurityService.getCurrentUser()
+        def roleA = Role.findById(1).save()
+        def roleU = Role.findById(2).save()
+        def roleM = Role.findById(3).save()
         def annoncesInstance = Annonce.getAll()
         switch (request.getMethod()) {
             case "GET":
                 renderThis(request.getHeader("Accept"), annoncesInstance)
                 break;
             case "POST":
-                def annonceInstance = new Annonce(title: params.title, description: params.description, price: Float.parseFloat(params.price))
-                annonceInstance.setActive(Boolean.TRUE)
-                request.getFiles("illustration").each {
-                    def uploadFile = it
-                    String uploadDir =  grailsApplication.config.getProperty('illustrations.basePath')
-                    File newFile = new File(uploadDir+"/"+it.originalFilename)
-                    uploadFile.transferTo(newFile)
-                    annonceInstance.addToIllustrations(new Illustration(filename: it.originalFilename))
-                }
-                if(user.getAuthorities()[0] == Role.findById(1)){
-                    if(params.author == null) {
-                        render(status: 400, text: 'AUTHOR NOT FOUND')
+
+                if (user.getAuthorities()[0] == roleA ||user.getAuthorities()[0] == roleU) {
+                    def annonceInstance = new Annonce(title: params.title, description: params.description, price: Float.parseFloat(params.price))
+                    annonceInstance.setActive(Boolean.TRUE)
+                    if (!params.illustration == '') {
+                    request.getFiles("illustration").each {
+                        def uploadFile = it
+                        String uploadDir = grailsApplication.config.getProperty('illustrations.basePath')
+                        File newFile = new File(uploadDir + "/" + it.originalFilename)
+                        uploadFile.transferTo(newFile)
+                        annonceInstance.addToIllustrations(new Illustration(filename: it.originalFilename))
+                    }}
+                    if (user.getAuthorities()[0] == Role.findById(1)) {
+                        if (params.author == null || User.findByUsername(params.author) == null) {
+                            render(status: 400, text: 'AUTHOR NOT FOUND')
+                        } else {
+                            User author = User.findByUsername(params.author)
+                            author.addToAnnonces(annonceInstance)
+                            author.save(flush: true)
+                            def url = createLink(controller: 'home', action: 'AllAds')
+                            render(contentType: 'text/html', text: "<script>window.location.href='$url'</script>", status: 200)
+                        }
+                    } else {
+                        user.addToAnnonces(annonceInstance)
+                        user.save(flush: true)
+                        def url = createLink(controller: 'home', action: 'myaccount')
+                        render(contentType: 'text/html', text: "<script>window.location.href='$url'</script>", status: 200)
                     }
-                    else {
-                        User author = User.findByUsername(params.author)
-                        author.addToAnnonces(annonceInstance)
-                        author.save(flush:true)
-                        def url = createLink(controller: 'home', action: 'AllAds')
-                        render(contentType: 'text/html', text: "<script>window.location.href='$url'</script>",status: 200)
-                    }
                 }
-                else {
-                    user.addToAnnonces(annonceInstance)
-                    user.save(flush: true)
-                    def url = createLink(controller: 'home', action: 'myaccount')
-                    render(contentType: 'text/html', text: "<script>window.location.href='$url'</script>",status: 200)
-                }
+                else
+                    render(status: 400, text: 'YOU DONT HAVE RIGHTS')
 
                 break;
-            default:
-                return response.status = 405
-                break;
-        }
-        return response.status = 406
+                    default:
+                    return response.status = 405
+                    break;
+                }
+                return response.status = 406
 
 
     }
