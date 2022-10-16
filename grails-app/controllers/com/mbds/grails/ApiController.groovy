@@ -227,7 +227,6 @@ class ApiController {
                 return response.status = 200
                 break;
             case "PATCH":
-
                 if(params.username != '' && params.password!= '' && params.role != '') {
                     render(status: 400, text: 'YOU MEAN PUT ?')
                 }
@@ -235,8 +234,6 @@ class ApiController {
                     render(status: 400, text: 'NO FIELDS WERE FOUND')
                 }
                 else {
-
-                    if (params.role) {
 
                         if ((params.role == "Admin" ||params.role == "admin") && user.getAuthorities()[0] == roleA) {
                             UserRole.remove(userInstance, userInstance.getAuthorities()[0])
@@ -260,14 +257,12 @@ class ApiController {
                                 }
                             }
                         }
-                        if (params.username)
+                        if (params.username != '')
                             userInstance.setUsername(params.username)
-                        if (params.password)
+                        if (params.password != '')
                             userInstance.setPassword(params.password)
 
-                    }
-                    else
-                        userInstance.save(flush : true )
+                    userInstance.save(flush : true )
 
                     return response.status = 200
 
