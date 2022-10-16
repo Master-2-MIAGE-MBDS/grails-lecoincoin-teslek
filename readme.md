@@ -12,7 +12,8 @@ Java : OpenJDK 1.8
 Git : version non pertinente
 
 # Critères de notation
-- **Y a t'il un readme utile et complet ?**
+
+[OUI](#Backend)
 - Est ce que le code métier est correct, respect des bonnes pratiques, code propre ?
 - Y a t'il des fonctionnalités "bonus" ?
 ### Backend
