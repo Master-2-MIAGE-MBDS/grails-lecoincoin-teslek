@@ -52,9 +52,7 @@ class ApiController {
                             adillus[i].delete(flush: true)
                         for (int i = 0; i < illus.size(); i++)
                             annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
-
                     }
-
                     if (params.title != '' || params.price != '' || params.description != '' || params.author != '') {
                         annonceInstance.setAuthor(User.findByUsername(params.author))
                         annonceInstance.title = params.title
@@ -80,7 +78,7 @@ class ApiController {
                         render(status: 400, text: 'NO FIELDS WERE FOUND')
                     } else {
 
-                        if (!(params.illustration == '')) {
+                        if (!(params.illustration == null)) {
                             def illus = params.illustrations.split(",")
                             println illus
                             def adillus = annonceInstance.getIllustrations()
