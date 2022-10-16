@@ -142,8 +142,10 @@ https://user-images.githubusercontent.com/91131812/196045728-2a73610b-2156-4754-
 
 
 - Modifier une des annonces en cliquant sur le bouton ***Edit*** de cette derniere :
-- 
 
+
+
+https://user-images.githubusercontent.com/91131812/196047816-8060bfe1-ac1d-4bdd-b1d7-7e3e727c61d4.mp4
 
 
 
