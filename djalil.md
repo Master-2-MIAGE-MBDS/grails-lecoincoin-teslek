@@ -109,5 +109,10 @@ En raison de l'utilisation de cette méthode, vous n'allez pas pouvoir creer un 
 
  - Créer un utilisateur avec ce mot de passe `U2FsdGVkX1+/rueyItrsI0JAtmZQT7Sl0ITgVdJZVv4=` qui correspond a `admin`
 
+# BONUS:
+
+Nous avons réussi à faire le déploiement de notre application GRAILS via la plateforme HEROKU.
+
+Lien ver le site : https://lecoincoincoin.herokuapp.com/
 
 
