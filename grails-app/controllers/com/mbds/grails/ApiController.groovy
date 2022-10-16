@@ -43,20 +43,23 @@ class ApiController {
                 break;
             case "PUT":
                 println user == annonceInstance.getAuthor()
+                println user.getAuthorities()[0]
                 if (user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
+                    println "icip"
                     if (!(params.illustration == '')) {
-                        println "ici"
                         def illus = params.illustrations.split(",")
                         println illus
                         def adillus = annonceInstance.getIllustrations()
                         annonceInstance.illustrations = null
-                        for (int i = 0; i < adillus.size(); i++) {
+                        for (int i = 0; i < adillus.size(); i++)
                             adillus[i].delete(flush: true)
+                        for (int i = 0; i < illus.size(); i++)
+                            annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
+
                     }
-                    for (int i = 0; i < illus.size(); i++)
-                        annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
-                    }
-                    if (params.title != '' || params.price != '' || params.description != '') {
+
+                    if (params.title != '' || params.price != '' || params.description != '' || params.author != '') {
+                        annonceInstance.setAuthor(User.findByUsername(params.author))
                         annonceInstance.title = params.title
                         annonceInstance.price = request.getParameter('price').toFloat()
                         annonceInstance.description = params.description
@@ -69,10 +72,14 @@ class ApiController {
                     render(status: 400, text: 'YOU DONT HAVE RIGHTS')
                 break;
             case "PATCH":
+                println user == annonceInstance.getAuthor()
+                println user.getAuthorities()[0]
+
                 if(user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
-                    if (params.title != '' && params.price != '' && params.description != '' && params.description != '') {
+                    println "ici"
+                    if (params.title != '' && params.price != '' && params.description != '' && params.author != '') {
                         render(status: 400, text: 'YOU MEAN PUT ?')
-                    } else if (params.title == '' && params.price == '' && params.description == '') {
+                    } else if (params.title == '' && params.price == '' && params.description == '' && params.author == '') {
                         render(status: 400, text: 'NO FIELDS WERE FOUND')
                     } else {
 
@@ -87,6 +94,8 @@ class ApiController {
                             for (int i = 0; i < illus.size(); i++)
                                 annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
                         }
+                        if(params.author != '')
+                            annonceInstance.setAuthor(User.findByUsername(params.author))
                         if (params.title != '')
                             annonceInstance.title = params.title
                         if (params.price != '')

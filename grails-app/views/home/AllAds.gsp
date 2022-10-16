@@ -138,7 +138,6 @@
         </section>
         <div class="editContainer" id = 'editAd' style = "display: none">
             <div id="editform" style ="margin-left: 10px">
-                <g:uploadForm controller = "api" action = "annonces" enctype="multipart/form-data">
                     <span>
                         <label for="editAuthor">Auteur</label>
                         <input type="text" id="editAuthor" name="title" placeholder="">
@@ -158,9 +157,8 @@
                         <label for="editIllustration">Illustrations</label>
                         <input type="file" id="editIllustration" name="illustration"  multiple accept="image/*">
                         <br>
-                        <input type="submit" value="EDIT">
+                        <button class = "buttonED" type="submit" onclick="patchUs()">EDIT</button>
                     </span>
-                </g:uploadForm>
                 <br>
                 <button id="buttonCancel" class="buttonED" style = "background-color: orangered;color: white;font-size: 1rem;" onclick="cancel();">Cancel</button>
             </div>
@@ -186,8 +184,49 @@
 
 
 <script type="text/javascript">
-    let origin = location.origin;
 
+    let origin = location.origin;
+    let adId
+    function patchUs(){
+        var AuthorV = document.getElementById('editAuthor').value;
+        var TitleV = document.getElementById('editTitle').value;
+        var PriceV= document.getElementById('editPrice').value;
+        var DescriptionV = document.getElementById('editDescription').value;
+        const data = {
+            id : adId,
+            author: AuthorV,
+            title: TitleV,
+            price: PriceV,
+            description: DescriptionV,
+            illustration: ''
+        };
+
+        if(AuthorV == '' || TitleV == '' || PriceV == '' || DescriptionV == '')
+        {
+            var url = origin+"/api/annonce";
+            var xhr = new XMLHttpRequest();
+            const searchParams = new URLSearchParams(data);
+
+            xhr.open("PATCH", url, true);
+            xhr.send(searchParams);
+            setTimeout(function(){
+                window.location.reload();
+            }, 650);
+
+        }
+        else {
+            var url = origin+"/api/annonce";
+            var xhr = new XMLHttpRequest();
+            const searchParams = new URLSearchParams(data);
+
+            xhr.open("PUT", url, true);
+            xhr.send(searchParams);
+            setTimeout(function(){
+                window.location.reload();
+            }, 650);
+
+        }
+    }
     $(document).on('click', '#Delete_annonce', function () {
         var adId = $(this).val();
         var xhttp = new XMLHttpRequest();
@@ -197,9 +236,9 @@
             window.location.reload();
         }, 700);
     });
-    $(document).on('click', '#buttonEdit', function (event) {
-        var adId = $(this).val();
 
+    $(document).on('click', '#buttonEdit', function (event) {
+        adId = $(this).val();
         document.getElementById('editAuthor').setAttribute('placeholder',document.getElementById('auteur'+adId).textContent)
         document.getElementById('editTitle').setAttribute('placeholder',document.getElementById('titre'+adId).textContent)
         document.getElementById('editPrice').setAttribute('placeholder',document.getElementById('prix'+adId).textContent)
