@@ -198,7 +198,7 @@
             title: TitleV,
             price: PriceV,
             description: DescriptionV,
-            illus: ''
+            illustrations: ''
         };
 
         if(AuthorV == '' || TitleV == '' || PriceV == '' || DescriptionV == '')
