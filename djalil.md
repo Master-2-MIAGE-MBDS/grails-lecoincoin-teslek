@@ -99,6 +99,15 @@ UserRole.create(userInstance, role , true)
 return response.status = 200
 //...//
 ```
-$$\textcolor{red}{\text{REMARQUE IMPORTANTE :}}$$
+$$\textcolor{red}{\text{AVANT D'EFFECTUER UN POST SUR USER (POUR LE CREER) VEUILLEZ :}}$$
 
-U2FsdGVkX1+/rueyItrsI0JAtmZQT7Sl0ITgVdJZVv4=
+En raison de l'utilisation de cette methode, vous n'allez pas pouvoir creer un utilisateur via Postman on lui specifiant un mopt de classique, etant donne quil doit dabord etre crypte, pour cela, deux methode :
+
+ - Creer un utilisateur a partir du FrontEnd, on se connectant avec un administrateur via le formulaire situant dans **/api/AllUsers** : 
+
+![image](https://user-images.githubusercontent.com/91131467/196044445-45a75ea1-54ea-407a-8e75-a221c272c448.png)
+
+ - Creer un utilisateur avec ce mot de passe `U2FsdGVkX1+/rueyItrsI0JAtmZQT7Sl0ITgVdJZVv4=` qui correspond a `admin`
+
+
+
