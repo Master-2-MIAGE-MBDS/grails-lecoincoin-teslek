@@ -140,5 +140,5 @@ server:
     port: 8081
     
 illustrations:
-    basePath: grails-app/assets/images
+    basePath: /assets/images
     baseUrl: http://localhost:13821/assets/

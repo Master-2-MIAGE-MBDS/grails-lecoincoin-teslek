@@ -153,6 +153,8 @@
 </div>
 </body>
 <script type="text/javascript">
+    let origin = location.origin;
+
     function cancel(){
         document.getElementById('editUser').style.display = "none";
         document.getElementById('Users').style.display = "block";
@@ -160,7 +162,7 @@
     $(document).on('click', '#Delete_user', function () {
         var userId = $(this).val();
         var xhttp = new XMLHttpRequest();
-        xhttp.open("DELETE", "http://localhost:13821/api/user/" + userId, true);
+        xhttp.open("DELETE", origin + "/api/user/" + userId, true);
         xhttp.send();
         setTimeout(function(){
             window.location.reload();
@@ -184,7 +186,7 @@
             role : document.getElementById('role').value,
             password : document.getElementById("password").value,
         };
-        var url = "http://localhost:13821/api/users";
+        var url = origin+"/api/users";
         var xhr = new XMLHttpRequest();
         const searchParams = new URLSearchParams(data);
         xhr.open("POST", url, true);
@@ -211,7 +213,7 @@
 
         if(usernameV == '' || passwordV == '' || roleV == '')
         {
-            var url = "http://localhost:13821/api/user";
+            var url = origin+"/api/user";
             var xhr = new XMLHttpRequest();
             const searchParams = new URLSearchParams(data);
 
@@ -220,7 +222,7 @@
 
         }
         else {
-            var url = "http://localhost:13821/api/user";
+            var url = origin+"/api/user";
             var xhr = new XMLHttpRequest();
             const searchParams = new URLSearchParams(data);
 

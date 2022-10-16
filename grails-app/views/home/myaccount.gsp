@@ -237,6 +237,7 @@
 </script>
 
 <script>
+    let origin = location.origin;
     let imgs= []
     let fns = []
     let adId = -1
@@ -246,7 +247,7 @@
     }
     function newdiv(adId) {
 
-        var url = "http://localhost:13821/api/illustrations";
+        var url = origin + "/api/illustrations";
         var xhr = new XMLHttpRequest();
 
         xhr.open("GET", url+"/"+adId,true);
@@ -278,7 +279,7 @@
     $(document).on('click', '#buttonDelete', function (event) {
         var adId = $(this).val();
 
-        var url = "http://localhost:13821/api/annonce";
+        var url = origin + "/api/annonce";
         var xhr = new XMLHttpRequest();
         xhr.open("DELETE", url+"/"+adId, true);
         xhr.send(null);
@@ -319,7 +320,7 @@
 
         if(titleV == '' || priceV == '' || descriptionV == '')
         {
-            var url = "http://localhost:13821/api/annonce";
+            var url = origin + "/api/annonce";
             var xhr = new XMLHttpRequest();
             const searchParams = new URLSearchParams(data);
 
@@ -328,7 +329,7 @@
 
         }
         else {
-            var url = "http://localhost:13821/api/annonce";
+            var url = origin + "/api/annonce";
             var xhr = new XMLHttpRequest();
             const searchParams = new URLSearchParams(data);
 
