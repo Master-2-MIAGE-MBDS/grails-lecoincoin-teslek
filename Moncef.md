@@ -244,7 +244,10 @@ def user() {
 
 On a un APIContolleur dans notre Package controlleur ou on a implémenter en utilisants des methodes et dans ces methodes on fait des swith ou dans ces dernier on implémente les methodes GET, PUT, PATCH, DELETE et POST. 
 
-```java
+On a utilisé Secured au debut du la class API Controlleur pour donner accées a les roles qui peuvent effectuer des changements en utilisant a l'API dans notre cas on a donné acces a tout les roles.
+
+``` 
+java
 
 @Secured(['ROLE_USER','ROLE_ADMIN','ROLE_MODERATOR'])
 class ApiController {
@@ -256,13 +259,17 @@ class ApiController {
      * Singleton
      * Gestion des points d'entrée : GET / PUT / PATCH / DELETE
      */
-     ```
+  ```
 
 
-On a utilisé Secured au debut du la class API Controlleur pour donner accées a les roles qui peuvent effectuer des changements en utilisant a l4API dans notre cas on a donné acces a tout les roles. On a géré les droits par utiliser des conditions dans les methodes ou on retourne 200 quand tout est bon, 400 qu'on a un manque d'information avec un message "NOT ALL FIELDS FOUND" ou "ROLE DOES NOT EXIST" et 403 qu'on le user connécté n'a pas le droit a effectuer la methode avec un message de "YOU DONT HAVE RIGHTS". 
+ On a géré les droits par utiliser des conditions dans les methodes ou on retourne 200 quand tout est bon, 400 qu'on a un manque d'information avec un message "NOT ALL FIELDS FOUND" ou "ROLE DOES NOT EXIST" et 403 qu'on le user connécté n'a pas le droit a effectuer la methode avec un message de "YOU DONT HAVE RIGHTS". 
 
 par exemple : 
-``` java 
+
+
+
+``` 
+java 
 case "PUT":
                 if (user.getAuthorities()[0] == roleM || user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
                     if (params.illustrations != '') {
