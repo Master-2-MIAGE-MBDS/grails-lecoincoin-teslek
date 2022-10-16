@@ -107,7 +107,7 @@ class ApiController {
                 annonceInstance.delete(flush:true)
                 annonceInstance.save()}
                 else
-                    render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
                 return response.status = 200
                 break;
             default:
@@ -217,7 +217,7 @@ class ApiController {
                                 UserRole.create(userInstance, roleM, true)
                             } else {
                                 if (params.role == "Moderator" || params.role == "moderator" || params.role == "User" || params.role == "user" || params.role == "Admin" || params.role == "admin")
-                                    render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+                                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
                                 else
                                 render(status: 400, text: 'ROLE DOES NOT EXIST')
                             }
@@ -253,7 +253,7 @@ class ApiController {
                                     UserRole.create(userInstance, roleM, true)
                                 } else {
                                     if (params.role == "Moderator" || params.role == "moderator" || params.role == "User" || params.role == "user" ||params.role == "Admin" ||params.role == "admin" )
-                                       render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+                                       render(status: 403, text: 'YOU DONT HAVE RIGHTS')
                                     else
                                     render(status: 400, text: 'ROLE DOES NOT EXIST')
 
@@ -282,7 +282,7 @@ class ApiController {
                 userInstance.delete(flush : true)
                     return response.status = 200}
                 else
-                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+                    render(status: 403 , text: 'YOU DONT HAVE RIGHTS')
 
 
                 break;
@@ -319,7 +319,7 @@ class ApiController {
                             role = Role.findById(3)
                         else {
                             if (params.role.toLowerCase() == 'admin' || params.role.toLowerCase() == 'user' || params.role.toLowerCase() == 'moderator')
-                                render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+                                render(status: 403, text: 'YOU DONT HAVE RIGHTS')
                             else
                             render(status: 400, text: 'ROLE DOES NOT EXIST')
                         }
