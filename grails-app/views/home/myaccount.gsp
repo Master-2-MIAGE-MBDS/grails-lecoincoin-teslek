@@ -169,7 +169,7 @@
                                         </div>
                                         <br>
                                         <br>
-                                        <button type="submit" id = 'submitEditForm' onclick = 'patchAd()'>EDIT</button>
+                                        <button type="submit" id = 'submitEditForm' onclick = 'patchAd()' >EDIT</button>
                                     </span>
                                 <br>
                                 <button id="buttonCancel" class="buttonED" style = "background-color: orangered;color: white;font-size: 1rem;" >Cancel</button>
@@ -262,7 +262,7 @@
 
                 var div = document.getElementById('editIllus')
                 for (var i = 0; i < imgsList.length; i++) {
-                    div.innerHTML += '<span id="'+imgsList[i]+'"><img src="/assets/'+imgsList[i]+'" class="illus" /><button type="button"  class="buttonDeleteIlluC" id="buttonDeleteIlluI" value="'+imgsList[i]+'" onclick ="illus(\''+imgsList[i]+'\')">X</button></span>'
+                    div.innerHTML += '<span class="spandiv" id="'+imgsList[i]+'"><img src="/assets/'+imgsList[i]+'" class="illus" /><button type="button"  class="buttonDeleteIlluC" id="buttonDeleteIlluI" value="'+imgsList[i]+'" onclick ="illus(\''+imgsList[i]+'\')">X</button></span>'
                     fns.push(imgsList[i])
                 }
             }

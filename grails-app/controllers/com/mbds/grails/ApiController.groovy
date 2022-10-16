@@ -45,26 +45,28 @@ class ApiController {
                 if (user.getAuthorities()[0] == roleM || user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
                     if (params.illustrations != '') {
                         def illus = params.illustrations.split(",")
-                        println illus
                         def adillus = annonceInstance.getIllustrations()
                         annonceInstance.illustrations = null
                         for (int i = 0; i < adillus.size(); i++)
                             adillus[i].delete(flush: true)
                         for (int i = 0; i < illus.size(); i++)
-                            annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
+                            annonceInstance.addToIllustrations(new Illustration(filename: illus[i])).save(flush: true)
                     }
                     if (params.title != '' || params.price != '' || params.description != '' || params.author != '') {
                         annonceInstance.setAuthor(User.findByUsername(params.author))
                         annonceInstance.title = params.title
                         annonceInstance.price = request.getParameter('price').toFloat()
                         annonceInstance.description = params.description
+                    }
+                    else {
                         annonceInstance.save(flush: true)
-                        return response.status = 200
-                    } else
                         render(status: 400, text: 'NOT ALL FIELD FOUND')
+                    }
+                    annonceInstance.save(flush: true)
+                    return response.status = 200
                 }
                 else
-                    render(status: 400, text: 'YOU DONT HAVE RIGHTS')
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
                 break;
             case "PATCH":
 
@@ -77,14 +79,13 @@ class ApiController {
 
                         if (params.illustrations != '') {
                             def illus = params.illustrations.split(",")
-                            println illus
                             def adillus = annonceInstance.getIllustrations()
                             annonceInstance.illustrations = null
                             for (int i = 0; i < adillus.size(); i++) {
                                 adillus[i].delete(flush: true)
                             }
                             for (int i = 0; i < illus.size(); i++)
-                                annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
+                                annonceInstance.addToIllustrations(new Illustration(filename: illus[i])).save(flush: true)
                         }
                         if(params.author != '')
                             annonceInstance.setAuthor(User.findByUsername(params.author))
@@ -98,8 +99,9 @@ class ApiController {
                         return response.status = 200
                     }
                 }
-                else
+                else {
                     render(status: 400, text: 'YOU DONT HAVE RIGHTS')
+                }
 
                 break;
             case "DELETE":
@@ -197,7 +199,6 @@ class ApiController {
                 break;
 
             case "PUT":
-                System.out.println(user.getAuthorities()[0])
 
                 if ((params.role.toLowerCase() == "admin") && user.getAuthorities()[0] == roleA) {
                     userInstance.setUsername(params.username)

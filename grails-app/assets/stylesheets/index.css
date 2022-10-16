@@ -792,20 +792,29 @@ body {
         display: table;
     }
     #editIllus{
-        margin-left: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        height: 150px;
+    }
+    .spandiv{
+        line-height: 50px;
+        height: 50px;
+        margin: 5px;
+        text-align: center;
     }
     #buttonDeleteIlluI {
         color: black;
         background: red;
     }
     #submitEditForm{
+        margin-top: 150px;
         background-color: #4CAF50; /* Green */
         border: none;
         color: white;
         padding: 15px 32px;
         text-align: center;
         text-decoration: none;
-        display: inline-block;
         font-size: 16px;
     }
     .containerB{
@@ -1118,6 +1127,9 @@ body {
         display: grid;
         grid-template-columns: auto auto auto;
         padding: 10px;
+    }
+    .buttonDeleteIlluC{
+        width: 50px;
     }
 
 }
