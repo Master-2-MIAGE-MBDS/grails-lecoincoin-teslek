@@ -188,7 +188,7 @@
     $(document).on('click', '#Delete_annonce', function () {
         var adId = $(this).val();
         var xhttp = new XMLHttpRequest();
-        xhttp.open("DELETE", "http://localhost:8081/api/annonce/" + adId, true);
+        xhttp.open("DELETE", "http://localhost:13821/api/annonce/" + adId, true);
         xhttp.send();
         setTimeout(function(){
             window.location.reload();

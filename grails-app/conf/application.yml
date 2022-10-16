@@ -140,5 +140,5 @@ server:
     port: 8081
     
 illustrations:
-    basePath: grails-lecoincoin-teslek/grails-app/assets/images
-    baseUrl: https://lecoincoin-teslek.herokuapp.com/assets/
+    basePath: grails-app/assets/images
+    baseUrl: http://localhost:13821/assets/
