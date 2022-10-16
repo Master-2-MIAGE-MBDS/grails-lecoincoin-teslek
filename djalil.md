@@ -30,5 +30,48 @@ Le FrontEnd gere l'affichage de cette interface precise pour l'USER grace aux ba
   </a>
 </sec:ifAnyGranted>
 ```
+### 2. SECURITE
+- **API REST** :  
+Chaque roles a ses propores droit et interdiction (par exemple un USER ne peut pas supprimer un autre utilsateur), on gere cela au niveau de notre **ApiController** comme suit :
+```java
+//Exemple d'un utilisateur qui va envoyer une requete DELETE dans /api/user/id
+def user() {
+        User user = springSecurityService.currentUser
+        def roleA = Role.findById(1).save()
+        def roleU = Role.findById(2).save()
+        def roleM = Role.findById(3).save()
+        // On vérifie qu'un ID ait bien été fourni
+        // On vérifie que l'id corresponde bien à une instance existante
+        def userInstance = User.findById(params.id)
+        if (!userInstance)
+            return response.status = 404
+
+        //...//
+            case "DELETE":
+                if (user.getAuthorities()[0] == roleA){
+                  UserRole.remove(userInstance,UserRole.findByUser(userInstance).getRole())
+                  userInstance.delete(flush : true)
+                  return response.status = 200
+                }
+                else
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+                break;
+         //...//
+         
+            default:
+                return response.status = 405
+                break;
+        }
+        return response.status = 406
+    }
+```
+`user.getAuthorities()[0] == roleA` Permet de recuperer les ROLES de celui qui emis la requete (dans notre cas un USER) et de verifier si il possede le ROLE **Admin** pour ensuite proceder a la suppretion de l'utilisateur, sinon en renvois un code **403 Forbidden** qui previendra a l'emetteur qu'il lui manque une permission d'accès à la ressource (METHOD).
+
+Exemple via Postman: 
+
+![image](https://user-images.githubusercontent.com/91131467/196038765-e464cfcd-ac2c-42e0-b915-d72a12136398.png) ![image](https://user-images.githubusercontent.com/91131467/196038906-dfc24522-d0cf-4efe-a999-a514592d5b3b.png)
+
+![image](https://user-images.githubusercontent.com/91131467/196039003-28f4546e-7fde-4a7e-8bfd-b6759a6182f7.png)
+
 
 
