@@ -1,7 +1,7 @@
 # ROLES/FONCTIONNALITÉS
 ### 1. USER :
-Ce role designe un utilisateur inscrit sur le site qui n'a pas des privileges administratifs il peut simplement :
-- Visualiser toutes les annonces disponible dans le site : 
+Ce rôle designe un utilisateur inscrit sur le site qui n'a pas des privilèges administratifs il peut simplement :
+- Visualiser toutes les annonces disponibles dans le site :
 
 https://user-images.githubusercontent.com/91131467/196034082-ed3f92e2-6fac-49d3-98f0-dd1c101500c8.mp4
 
@@ -9,19 +9,19 @@ https://user-images.githubusercontent.com/91131467/196034082-ed3f92e2-6fac-49d3-
 
 https://user-images.githubusercontent.com/91131467/196034822-1ad92825-ed96-4e31-95fe-7dc039671046.mp4
 
-- Visualiser ses propres annonces a partir de ***MyAccount*** : 
+- Visualiser ses propres annonces à partir de ***MyAccount*** : 
 
 https://user-images.githubusercontent.com/91131467/196034867-0ecdbbf4-f237-4a24-b923-1ef58b115e1e.mp4
 
-- Modifier une de ses annonces en cliquant sur le bouton ***Edit*** de cette derniere :
+- Modifier une de ces annonces en cliquant sur le bouton ***Edit*** de cette dernière :
 
 https://user-images.githubusercontent.com/91131467/196034941-83b8e95c-b92d-41b3-98c5-ec043997fac9.mp4
 
-- Ajouter une annonces en cliquant sur le bouton ***Add Ad*** :
+- Ajouter une annonce en cliquant sur le bouton ***Add Ad*** :
 
 https://user-images.githubusercontent.com/91131467/196036256-cc616310-9e2d-45c2-b8ba-2bee291d7ce2.mp4
 
-Le FrontEnd gere l'affichage de cette interface precise pour l'USER grace aux balises GSP inclus comme par exemple : 
+Le FrontEnd gere l'affichage de cette interface précise pour l'USER grace aux balises GSP inclus comme par exemple : 
 ```html
 <sec:ifAnyGranted roles="ROLE_USER">
   <a href = "/home/myaccount">
@@ -32,7 +32,7 @@ Le FrontEnd gere l'affichage de cette interface precise pour l'USER grace aux ba
 ```
 ### 2. SECURITE
 - **API REST** :  
-Chaque roles a ses propores droit et interdiction (par exemple un USER ne peut pas supprimer un autre utilsateur), on gere cela au niveau de notre **ApiController** comme suit :
+Chaque rôle à ses propres droits et interdictions (par exemple un USER ne peut pas supprimer un autre utilisateur), sa gestion est au niveau de notre **ApiController** comme suit :
 ```java
 //Exemple d'un utilisateur qui va envoyer une requete DELETE dans /api/user/id
 def user() {
@@ -65,7 +65,7 @@ def user() {
         return response.status = 406
     }
 ```
-`user.getAuthorities()[0] == roleA` Permet de recuperer les ROLES de celui qui emis la requete (dans notre cas un USER) et de verifier si il possede le ROLE **Admin** pour ensuite proceder a la suppretion de l'utilisateur, sinon en renvois un code **403 Forbidden** qui previendra a l'emetteur qu'il lui manque une permission d'accès à la ressource (METHOD).
+`user.getAuthorities()[0] == roleA` Permets de récupérer les ROLES de celui qui émit la requête (dans notre cas un USER) et de vérifier s'il possède le ROLE **Admin** pour ensuite procéder à la suppression de l'utilisateur, sinon en renvois un code **403 Forbidden** qui préviendra à l'émetteur qu'il lui manque une permission d'accès à la ressource (METHOD).
 
 Exemple via Postman: 
 
@@ -77,17 +77,17 @@ Exemple via Postman:
 $$\textcolor{red}{\text{REMARQUE IMPORTANTE :}}$$
 
 ```diff
-- Le hashage du code est fait uniquement lors de la METHOD POST d'un nouveau utilisateur pour faciliter les test via postman pour les autres cas ou une modification de password est requise.
+- Le hashage du code est fait uniquement lors de la METHOD POST d'un nouvel utilisateur pour faciliter les tests via postman pour les autres cas ou une modification de password est requise.
 ```
 
-Lors que un administrateur (ou un visiteur qui souhaite creer son compte, qui n'a pas ete implemente) cree un utilisateur, il emmait une requete HTTP avec la methode POST, en temps normal, l'*username* et le *password* sont passe en parametre qu'on pourra les visualisees dans l'URL, pour cela, on a mis en place un systeme d'encryptage/decryptage pour le *password* qui conciste a crypter le *password* avant d'emmettre la requete a l'aide de cette fonction :
+Lors qu'un administrateur (ou un visiteur qui souhaite creer son compte, qui n'a pas ete implémente) cree un utilisateur, il emmait une requête HTTP avec la méthode POST, en temps normal, l'*username* et le *password* sont passés en paramètre qu'on pourra les visualiser dans l'URL, pour cela, on a mis en place un système d'encryptage/décryptage pour le *password* qui consiste à crypter le *password* avant d'émettre la requête a l'aide de cette fonction ;
 
 ```javascript
 CryptoJS.AES.encrypt(password, "My Secret Passphrase"),
 ```
 De la librairie **CryptoJS**
 
-Des la reception de la requete dans notre API REST, on procede au decryptage du *password* crypte pour ensuite creer l'USER avec ses identifiants : 
+Dès la réception de la requête dans notre API REST, ont procede au décryptage du *password* crypté pour ensuite creer l'USER avec ses identifiants : 
 
 ```java
 //...//
@@ -101,13 +101,13 @@ return response.status = 200
 ```
 $$\textcolor{red}{\text{AVANT D'EFFECTUER UN POST SUR USER (POUR LE CREER) VEUILLEZ :}}$$
 
-En raison de l'utilisation de cette methode, vous n'allez pas pouvoir creer un utilisateur via Postman on lui specifiant un mopt de classique, etant donne quil doit dabord etre crypte, pour cela, deux methode :
+En raison de l'utilisation de cette méthode, vous n'allez pas pouvoir creer un utilisateur via Postman on lui spécifiant un mot de classique, étant donné quil doit d'abord être crypter, pour cela, deux méthodes :
 
- - Creer un utilisateur a partir du FrontEnd, on se connectant avec un administrateur via le formulaire situant dans **/api/AllUsers** : 
+ - Créer un utilisateur à partir du Front End, on se connectent avec un administrateur via le formulaire situant dans **/api/AllUsers** : 
 
 ![image](https://user-images.githubusercontent.com/91131467/196044445-45a75ea1-54ea-407a-8e75-a221c272c448.png)
 
- - Creer un utilisateur avec ce mot de passe `U2FsdGVkX1+/rueyItrsI0JAtmZQT7Sl0ITgVdJZVv4=` qui correspond a `admin`
+ - Créer un utilisateur avec ce mot de passe `U2FsdGVkX1+/rueyItrsI0JAtmZQT7Sl0ITgVdJZVv4=` qui correspond a `admin`
 
 
 
