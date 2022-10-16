@@ -4,6 +4,8 @@
 
 # [*Le dossier contenant les collections pour les test sur Postman*](https://github.com/Master-2-MIAGE-MBDS/grails-lecoincoin-teslek/tree/last/POSTMAN-COLLECTIONS)
 
+## !!! SI JAMAIS VOUS SOUHAITEZ POUVOIR UPLOAD LES ILLUSTRATIONS IL FAUT CHANGER CETTE LIGNE DE CODE DANS [ApiController](https://github.com/Master-2-MIAGE-MBDS/grails-lecoincoin-teslek/blob/43ef3ce12ecec443f3f074645ddaf5f1c884cf30/grails-app/controllers/com/mbds/grails/ApiController.groovy#L146) PAR : `File newFile = new File("Votre/Absolute/Path/Du/Projet/" + it.originalFilename)` !!!
+
 
 # I. Présentation : 
 
