@@ -9,7 +9,7 @@
 
 # I. Présentation : 
 
-  Le site e-commerce de la societé LECOINCOIN est un site de consommation collaborative qui met en relation essentiellement des professionnels comme des particuliers en France, souhaitant donner, vendre, ou acheter. Dans ce site on a 3 roles importants Admin, Moderator et User chaqu'un a ses priviléges. en commencant par l'Admin qui tout les droits et accés a tout les données jusqu'a User qui le minimum de droit et d'accés au données
+  Le site e-commerce de la societé LECOINCOIN est un site de consommation collaborative qui met en relation essentiellement des professionnels comme des particuliers en France, souhaitant donner, vendre, ou acheter. Dans ce site on a 3 roles importants Admin, Moderator et User chaqu'un a ses priviléges. en commencant par l'Admin qui tout les droits et accés a tout les données jusqu'au simple User qui a le minimum des droits et d'accés au données
 
 # II. ROLES/FONCTIONNALITÉS
 
@@ -133,7 +133,7 @@ Ce rôle est légèrement similaire à celui de l'admin, sa différence est dans
   
 # III. API REST :
 
-  Nous disposant d'un controlleur du nom de [ApiController.groovy](https://github.com/Master-2-MIAGE-MBDS/grails-lecoincoin-teslek/blob/last/grails-app/controllers/com/mbds/grails/ApiController.groovy) au sein de notre projet, il s'agit du moteur de notre API REST, il s'occupe de la gestion des differentes methodes GET, PUT, PATCH, DELETE et POST ainsi que les reponses et les status de ces derniers tout en controllant la securite et les droits de la personne qui l'utilise. 
+  Nous disposant d'un controller du nom de [ApiController.groovy](https://github.com/Master-2-MIAGE-MBDS/grails-lecoincoin-teslek/blob/last/grails-app/controllers/com/mbds/grails/ApiController.groovy) au sein de notre projet, il s'agit du moteur de notre API REST, il s'occupe de la gestion des différentes méthodes GET, PUT, PATCH, DELETE et POST ainsi que les réponses et les status de ces derniers tous en contrôle Lant la sécurité et les droits de la personne qui l'utilisent.
 
   L'annotation *@Secured* designe les personnes ayant un des roles mentionees ce qui lui permettra d'utiliser l'API ou non dans le cas contraire, dans notre cas, on donne l'acces a tout les utilisateurs ayant n'importe quel role des 3 etant donne que la gestion des droits ce fait dans le controller .
   
