@@ -14,7 +14,7 @@ import java.nio.file.Path
 @Secured(['ROLE_USER','ROLE_ADMIN','ROLE_MODERATOR'])
 class ApiController {
 
-
+    def assetResourceLocator
     def springSecurityService
 
     /**
@@ -42,16 +42,17 @@ class ApiController {
                 renderThis(request.getHeader("Accept"), annonceInstance)
                 break;
             case "PUT":
-
+                println user == annonceInstance.getAuthor()
                 if (user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
-                    if (!params.illustration == '') {
-                    def illus = params.illustrations.split(",")
-                    def adillus = annonceInstance.getIllustrations()
-                    annonceInstance.illustrations = null
-                    for (int i = 0; i < adillus.size(); i++) {
-                        adillus[i].delete(flush: true)
+                    if (!(params.illustration == '')) {
+                        println "ici"
+                        def illus = params.illustrations.split(",")
+                        println illus
+                        def adillus = annonceInstance.getIllustrations()
+                        annonceInstance.illustrations = null
+                        for (int i = 0; i < adillus.size(); i++) {
+                            adillus[i].delete(flush: true)
                     }
-                    println annonceInstance.getIllustrations()
                     for (int i = 0; i < illus.size(); i++)
                         annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
                     }
@@ -75,8 +76,9 @@ class ApiController {
                         render(status: 400, text: 'NO FIELDS WERE FOUND')
                     } else {
 
-                        if (!params.illustration == '') {
+                        if (!(params.illustration == '')) {
                             def illus = params.illustrations.split(",")
+                            println illus
                             def adillus = annonceInstance.getIllustrations()
                             annonceInstance.illustrations = null
                             for (int i = 0; i < adillus.size(); i++) {
@@ -135,11 +137,10 @@ class ApiController {
                 if (user.getAuthorities()[0] == roleA ||user.getAuthorities()[0] == roleU) {
                     def annonceInstance = new Annonce(title: params.title, description: params.description, price: Float.parseFloat(params.price))
                     annonceInstance.setActive(Boolean.TRUE)
-                    if (!params.illustration == '') {
+                    if (!(params.illustration == '')) {
                     request.getFiles("illustration").each {
                         def uploadFile = it
-                        String uploadDir = grailsApplication.config.getProperty('illustrations.basePath')
-                        File newFile = new File(uploadDir + "/" + it.originalFilename)
+                        File newFile = new File("C:/Users/Dj/Desktop/M2/FRAMEWORK GRAILS/grails-lecoincoin-teslek/grails-app/assets/images/" + it.originalFilename)
                         uploadFile.transferTo(newFile)
                         annonceInstance.addToIllustrations(new Illustration(filename: it.originalFilename))
                     }}
@@ -281,7 +282,7 @@ class ApiController {
                 userInstance.delete(flush : true)
                     return response.status = 200}
                 else
-                    render(status: 401, text: 'YOU DONT HAVE RIGHTS')
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
 
 
                 break;

@@ -202,7 +202,6 @@
         var usernameV= document.getElementById('editusername').value;
         var passwordV = document.getElementById('editpassword').value;
         var roleV = document.getElementById('editrole').value;
-        alert(passwordV)
         const data = {
             id: UsId,
             username :usernameV,
@@ -218,6 +217,9 @@
 
             xhr.open("PATCH", url, true);
             xhr.send(searchParams);
+            setTimeout(function(){
+                window.location.reload();
+            }, 650);
 
         }
         else {
@@ -227,11 +229,12 @@
 
             xhr.open("PUT", url, true);
             xhr.send(searchParams);
+            setTimeout(function(){
+                window.location.reload();
+            }, 650);
 
         }
-        setTimeout(function(){
-            window.location.reload();
-        }, 500);
+
     }
 </script>
 </html>

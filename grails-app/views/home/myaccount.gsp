@@ -310,6 +310,7 @@
         var titleV = document.getElementById('editTitle').value;
         var priceV = document.getElementById('editPrice').value;
         var descriptionV = document.getElementById('editDescription').value;
+        console.log(fns)
         const data = {
             id: adId,
             title: titleV,

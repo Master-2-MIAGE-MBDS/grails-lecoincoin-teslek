@@ -24,7 +24,7 @@
                     </a>
                 </sec:ifAnyGranted>
                 <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODO">
-                    <a>
+                    <a href="/home/index">
                         <i class="zmdi zmdi-view-dashboard"></i>
                         Dashboard
                     </a>
@@ -38,7 +38,7 @@
                     </a>
                 </sec:ifAnyGranted>
                 <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODO">
-                    <a onclick="myFunction()" >
+                    <a href="/home/AllUsers" >
                         <i  class="zmdi zmdi-widgets" ></i>
                         All Users
                     </a>
@@ -48,7 +48,7 @@
 
             <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODO">
                 <li>
-                    <a onclick="myFunction1()" >
+                    <a href="/home/AllAds" >
                         <i class="zmdi zmdi-calendar"></i>
                         All Ads
                     </a>
