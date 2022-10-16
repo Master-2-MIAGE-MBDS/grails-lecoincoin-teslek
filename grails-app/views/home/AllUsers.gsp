@@ -180,11 +180,10 @@
 
     });
     function addUser() {
-        document.getElementById("password").value = CryptoJS.AES.encrypt(document.getElementById("password").value, "My Secret Passphrase");
         const data = {
             username: document.getElementById('username').value,
             role : document.getElementById('role').value,
-            password : document.getElementById("password").value,
+            password : CryptoJS.AES.encrypt(document.getElementById("password").value, "My Secret Passphrase"),
         };
         var url = origin+"/api/users";
         var xhr = new XMLHttpRequest();
