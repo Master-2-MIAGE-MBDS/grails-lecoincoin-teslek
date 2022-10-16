@@ -43,7 +43,7 @@ class ApiController {
                 break;
             case "PUT":
                 if (user.getAuthorities()[0] == roleM || user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
-                    if (!(params.illustration == null)) {
+                    if (params.illustrations != '') {
                         def illus = params.illustrations.split(",")
                         println illus
                         def adillus = annonceInstance.getIllustrations()
@@ -75,7 +75,7 @@ class ApiController {
                         render(status: 400, text: 'NO FIELDS WERE FOUND')
                     } else {
 
-                        if (!(params.illustration == null)) {
+                        if (params.illustrations != '') {
                             def illus = params.illustrations.split(",")
                             println illus
                             def adillus = annonceInstance.getIllustrations()
@@ -308,30 +308,27 @@ class ApiController {
                 break;
             case "POST":
                 def role = null
-                if(params.role.toLowerCase() == 'admin' && user.getAuthorities()[0] == roleA )
-                    role = Role.findById(1)
-                else {
-                    if (params.role.toLowerCase() == 'user' && user.getAuthorities()[0] == roleA )
-                        role = Role.findById(2)
-                    else {
-                        if (params.role.toLowerCase() == 'moderator' && user.getAuthorities()[0] == roleA )
-                            role = Role.findById(3)
-                        else {
-                            if (params.role.toLowerCase() == 'admin' || params.role.toLowerCase() == 'user' || params.role.toLowerCase() == 'moderator')
-                                render(status: 403, text: 'YOU DONT HAVE RIGHTS')
-                            else
-                            render(status: 400, text: 'ROLE DOES NOT EXIST')
-                        }
-                    }
-                }
+                if(user.getAuthorities()[0] == roleA){
+                    if(params.role.toLowerCase() == 'admin')
+                        role = roleA
+                    else if(params.role.toLowerCase() == 'moderator')
+                        role = roleM
+                    else if(params.role.toLowerCase() == 'user')
+                        role = roleU
+                    else
+                        render(status: 400, text: 'ROLE DOES NOT EXIST')
+                    AES a = new AES()
+                    String decrypt =  a.decryptText(request.getParameter('password'),"My Secret Passphrase")
+                    def userInstance = new User(username: params.username , password:decrypt)
+                    userInstance.save(flush : true)
+                    UserRole.create(userInstance, role , true)
+                    return response.status = 200
 
-                AES a = new AES()
-                String decrypt =  a.decryptText(request.getParameter('password'),"My Secret Passphrase")
-                def userInstance = new User(username: params.username , password:decrypt)
-                userInstance.save(flush : true)
-                UserRole.create(userInstance, role , true)
-                return response.status = 200
-                break;
+                }
+                else
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+                break
+
             default:
                 return response.status = 405
                 break;
