@@ -15,7 +15,6 @@ https://user-images.githubusercontent.com/91131812/196042121-025d4f34-0d17-4647-
 
 
 
-
 https://user-images.githubusercontent.com/91131812/196043285-8d97f712-947a-472b-96ea-6f00ced2ddef.mp4
 
 
@@ -28,13 +27,17 @@ https://user-images.githubusercontent.com/91131812/196043285-8d97f712-947a-472b-
 
 https://user-images.githubusercontent.com/91131812/196042182-5f1de71f-9e20-48de-b0e2-fc12bbbd6e6f.mp4
 
-- Visualiser une annonce en cliquant sur leur ID : todo 
+- Visualiser une annonce en cliquant sur leur ID : 
 
 
 https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-944d-78a86c58bfa4.mp4
 
 
-- Modifier une des annonces en cliquant sur le bouton ***Edit*** de cette derniere :
+- Modifier un utilisateur en cliquant sur le bouton ***Edit*** de cette derniere :
+
+
+https://user-images.githubusercontent.com/91131812/196043473-fa8e40f3-c1de-43eb-ad6b-f469b17d2b6a.mp4
+
 
 
 
@@ -58,8 +61,13 @@ https://user-images.githubusercontent.com/91131812/196042815-594db0e9-0778-4a76-
 https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-944d-78a86c58bfa4.mp4
 
 
+- Modifier une des annonces en cliquant sur le bouton ***Edit*** de cette derniere :
 
-- Ajouter un utilisateur en cliquant sur le bouton ***Add Ad*** :
+
+- Ajouter une annonce en cliquant sur le bouton ***Add Ad*** :
+
+
+https://user-images.githubusercontent.com/91131812/196043629-1cd25902-0ae1-4638-9bec-ee97acbe688c.mp4
 
 
 
@@ -68,6 +76,53 @@ https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-
 
 
 https://user-images.githubusercontent.com/91131812/196043035-9038119a-7e60-469c-90ee-92a01d1f9680.mp4
+
+
+
+
+
+
+# 1. Moderateur :
+Ce role a acces a tout les données exactement comme l'admin mais il n'a pas tout les fontionalité de ce dernier (ni supprimer ou ajouter une annonce ou un utilisateur, aussi il ne peut pas modifier le role d'un utilisateur à un Admin) 
+
+
+
+
+Le modérateur peut : 
+
+-Visualiser les annonces dans DAshboard exctement commee l'admin. 
+
+
+- Visualiser une annonce en cliquant sur son titre exactemment comme l'admin.
+
+- ## à partir de AllUsers : 
+
+- Visualiser tout les utilisateurs avec leurs ID, username, password en * , role et ses annonces , et visualiser les annonces en cliquant sur leur ID : 
+
+
+
+- Modifier un utilisateur en cliquant sur le bouton ***Edit*** de cette derniere :
+
+
+
+- ## à partir de AllAds :
+-  Visualiser toutes lesannonces avec leurs ID, auteure, titre , description, prix et ses illustrations :  
+
+https://user-images.githubusercontent.com/91131812/196042815-594db0e9-0778-4a76-a730-b65d806bed9b.mp4
+
+- Visualier une annonce en cliquant sur leur titre : 
+
+https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-944d-78a86c58bfa4.mp4
+
+
+- Modifier une des annonces en cliquant sur le bouton ***Edit*** de cette derniere :
+
+
+
+
+
+
+
 
 
 
