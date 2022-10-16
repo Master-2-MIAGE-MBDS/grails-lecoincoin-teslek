@@ -246,8 +246,7 @@ On a un APIContolleur dans notre Package controlleur ou on a implémenter en uti
 
 On a utilisé Secured au debut du la class API Controlleur pour donner accées a les roles qui peuvent effectuer des changements en utilisant a l'API dans notre cas on a donné acces a tout les roles.
 
-``` 
-java
+```java
 
 @Secured(['ROLE_USER','ROLE_ADMIN','ROLE_MODERATOR'])
 class ApiController {
@@ -268,8 +267,7 @@ par exemple :
 
 
 
-``` 
-java 
+```java 
 case "PUT":
                 if (user.getAuthorities()[0] == roleM || user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
                     if (params.illustrations != '') {
