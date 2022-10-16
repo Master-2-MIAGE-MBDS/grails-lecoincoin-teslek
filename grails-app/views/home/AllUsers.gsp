@@ -196,7 +196,6 @@
     }
 
 
-
     function patchUs(){
         var UsId = document.getElementById('editId').value;
         var usernameV= document.getElementById('editusername').value;
