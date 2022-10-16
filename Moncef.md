@@ -1,3 +1,7 @@
+# I.Présentation : 
+Le site e-commerce de la societé LECOINCOIN est un site de consommation collaborative qui met en relation essentiellement des professionnels comme des particuliers en France, souhaitant donner, vendre, ou acheter. Dans ce site on a 3 roles importants Admin, Moderator et User chaqu'un a ses priviléges. en commencant par l'Admin qui tout les droits et accés a tout les données jusqu'a User qui le minimum de droit et d'accés au données
+
+
 
 # 1. Admin :
 Ce role designe l'administrateur qui a le tout les droits dans notre site :
@@ -100,7 +104,7 @@ https://user-images.githubusercontent.com/91131812/196043035-9038119a-7e60-469c-
 
 
 
-# 1. Moderateur :
+# 2. Moderateur :
 Ce role a acces a tout les données exactement comme l'admin mais il n'a pas tout les fontionalité de ce dernier (ni supprimer ou ajouter une annonce ou un utilisateur, aussi il ne peut pas modifier le role d'un utilisateur à un Admin) 
 
 
@@ -234,13 +238,7 @@ def user() {
         return response.status = 406
     }
 ```
-`user.getAuthorities()[0] == roleA` Permet de recuperer les ROLES de celui qui emis la requete (dans notre cas un USER) et de verifier si il possede le ROLE **Admin** pour ensuite proceder a la suppretion de l'utilisateur, sinon en renvois un code **403 Forbidden** qui previendra a l'emetteur qu'il lui manque une permission d'accès à la ressource (METHOD).
 
-Exemple via Postman: 
-
-![image](https://user-images.githubusercontent.com/91131467/196038765-e464cfcd-ac2c-42e0-b915-d72a12136398.png) ![image](https://user-images.githubusercontent.com/91131467/196038906-dfc24522-d0cf-4efe-a999-a514592d5b3b.png)
-
-![image](https://user-images.githubusercontent.com/91131467/196039003-28f4546e-7fde-4a7e-8bfd-b6759a6182f7.png)
 
 
 
