@@ -73,5 +73,32 @@ Exemple via Postman:
 
 ![image](https://user-images.githubusercontent.com/91131467/196039003-28f4546e-7fde-4a7e-8bfd-b6759a6182f7.png)
 
+- **HASH PASSWORD** : 
+$$\textcolor{red}{\text{REMARQUE IMPORTANTE :}}$$
 
+```diff
+- Le hashage du code est fait uniquement lors de la METHOD POST d'un nouveau utilisateur pour faciliter les test via postman pour les autres cas ou une modification de password est requise.
+```
 
+Lors que un administrateur (ou un visiteur qui souhaite creer son compte, qui n'a pas ete implemente) cree un utilisateur, il emmait une requete HTTP avec la methode POST, en temps normal, l'*username* et le *password* sont passe en parametre qu'on pourra les visualisees dans l'URL, pour cela, on a mis en place un systeme d'encryptage/decryptage pour le *password* qui conciste a crypter le *password* avant d'emmettre la requete a l'aide de cette fonction :
+
+```javascript
+CryptoJS.AES.encrypt(password, "My Secret Passphrase"),
+```
+De la librairie **CryptoJS**
+
+Des la reception de la requete dans notre API REST, on procede au decryptage du *password* crypte pour ensuite creer l'USER avec ses identifiants : 
+
+```java
+//...//
+AES a = new AES()
+String decrypt =  a.decryptText(request.getParameter('password'),"My Secret Passphrase")
+def userInstance = new User(username: params.username , password:decrypt)
+userInstance.save(flush : true)
+UserRole.create(userInstance, role , true)
+return response.status = 200
+//...//
+```
+$$\textcolor{red}{\text{REMARQUE IMPORTANTE :}}$$
+
+U2FsdGVkX1+/rueyItrsI0JAtmZQT7Sl0ITgVdJZVv4=
