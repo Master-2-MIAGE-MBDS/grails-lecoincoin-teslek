@@ -7,6 +7,10 @@
 ## !!! SI JAMAIS VOUS SOUHAITEZ POUVOIR UPLOAD LES ILLUSTRATIONS IL FAUT CHANGER CETTE LIGNE DE CODE DANS [ApiController](https://github.com/Master-2-MIAGE-MBDS/grails-lecoincoin-teslek/blob/43ef3ce12ecec443f3f074645ddaf5f1c884cf30/grails-app/controllers/com/mbds/grails/ApiController.groovy#L146) PAR : `File newFile = new File("Votre/Absolute/Path/Du/Projet/" + it.originalFilename)` !!!
 
 
+# Démonstration demandée :
+
+https://user-images.githubusercontent.com/91131467/196057093-dd0e6b60-6238-4987-b013-46357fabb1c8.mp4
+
 # I. Présentation : 
 
   Le site e-commerce de la societé LECOINCOIN est un site de consommation collaborative qui met en relation essentiellement des professionnels comme des particuliers en France, souhaitant donner, vendre, ou acheter. Dans ce site on a 3 roles importants Admin, Moderator et User chaqu'un a ses priviléges. en commencant par l'Admin qui tout les droits et accés a tout les données jusqu'au simple User qui a le minimum des droits et d'accés au données
@@ -255,6 +259,10 @@ UserRole.create(userInstance, role , true)
 return response.status = 200
 //...//
 ```
+[**AES**](https://github.com/Master-2-MIAGE-MBDS/grails-lecoincoin-teslek/blob/last/src/main/groovy/com/mbds/grails/AES.java) est une classe utilitaire qui contient la methode pour l'encryptage *decryptText()*.
+
+
+
 $$\textcolor{red}{\text{AVANT D'EFFECTUER UN POST SUR USER (POUR LE CREER) VEUILLEZ :}}$$
 
 En raison de l'utilisation de cette méthode, vous n'allez pas pouvoir creer un utilisateur via Postman on lui spécifiant un mot de classique, étant donné quil doit d'abord être crypter, pour cela, deux méthodes :
