@@ -37,7 +37,11 @@ https://user-images.githubusercontent.com/91131812/196042182-5f1de71f-9e20-48de-
 - Visualiser une annonce en cliquant sur leur ID : 
 
 
-https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-944d-78a86c58bfa4.mp4
+
+
+https://user-images.githubusercontent.com/91131812/196044885-4ecf334a-de44-4ecc-a3ae-7e8c75045ef9.mp4
+
+
 
 
 - Modifier un utilisateur en cliquant sur le bouton ***Edit*** de cette derniere :
