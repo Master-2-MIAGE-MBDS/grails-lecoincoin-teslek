@@ -42,10 +42,7 @@ class ApiController {
                 renderThis(request.getHeader("Accept"), annonceInstance)
                 break;
             case "PUT":
-                println user == annonceInstance.getAuthor()
-                println user.getAuthorities()[0]
-                if (user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
-                    println "icip"
+                if (user.getAuthorities()[0] == roleM || user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
                     if (!(params.illustration == '')) {
                         def illus = params.illustrations.split(",")
                         println illus
@@ -75,7 +72,7 @@ class ApiController {
                 println user == annonceInstance.getAuthor()
                 println user.getAuthorities()[0]
 
-                if(user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
+                if(user.getAuthorities()[0] == roleM ||user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
                     println "ici"
                     if (params.title != '' && params.price != '' && params.description != '' && params.author != '') {
                         render(status: 400, text: 'YOU MEAN PUT ?')
@@ -146,13 +143,14 @@ class ApiController {
                 if (user.getAuthorities()[0] == roleA ||user.getAuthorities()[0] == roleU) {
                     def annonceInstance = new Annonce(title: params.title, description: params.description, price: Float.parseFloat(params.price))
                     annonceInstance.setActive(Boolean.TRUE)
-                    if (!(params.illustration == '')) {
-                    request.getFiles("illustration").each {
-                        def uploadFile = it
-                        File newFile = new File("C:/Users/Dj/Desktop/M2/FRAMEWORK GRAILS/grails-lecoincoin-teslek/grails-app/assets/images/" + it.originalFilename)
-                        uploadFile.transferTo(newFile)
-                        annonceInstance.addToIllustrations(new Illustration(filename: it.originalFilename))
-                    }}
+                    if (!(params.illus == null)) {
+                        request.getFiles("illustration").each {
+                            def uploadFile = it
+                            File newFile = new File("C:/Users/Dj/Desktop/M2/FRAMEWORK GRAILS/grails-lecoincoin-teslek/grails-app/assets/images/" + it.originalFilename)
+                            uploadFile.transferTo(newFile)
+                            annonceInstance.addToIllustrations(new Illustration(filename: it.originalFilename))
+                        }
+                    }
                     if (user.getAuthorities()[0] == Role.findById(1)) {
                         if (params.author == null || User.findByUsername(params.author) == null) {
                             render(status: 400, text: 'AUTHOR NOT FOUND')
@@ -331,7 +329,6 @@ class ApiController {
                 }
 
                 AES a = new AES()
-                System.out.println(request.getParameter('password'))
                 String decrypt =  a.decryptText(request.getParameter('password'),"My Secret Passphrase")
                 def userInstance = new User(username: params.username , password:decrypt)
                 userInstance.save(flush : true)

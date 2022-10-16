@@ -155,7 +155,7 @@
 
                         </div>
                         <label for="editIllustration">Illustrations</label>
-                        <input type="file" id="editIllustration" name="illustration"  multiple accept="image/*">
+                        <input type="file" id="editIllustration" name="editIllustration"  multiple accept="image/*">
                         <br>
                         <button class = "buttonED" type="submit" onclick="patchUs()">EDIT</button>
                     </span>
@@ -198,7 +198,7 @@
             title: TitleV,
             price: PriceV,
             description: DescriptionV,
-            illustration: ''
+            illus: ''
         };
 
         if(AuthorV == '' || TitleV == '' || PriceV == '' || DescriptionV == '')
