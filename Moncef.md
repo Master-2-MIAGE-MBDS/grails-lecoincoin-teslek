@@ -11,29 +11,81 @@ L'admin peut :
 https://user-images.githubusercontent.com/91131812/196042121-025d4f34-0d17-4647-b7eb-51a0e73f3f60.mp4
 
 
-
-- Visualiser une annonce en cliquant sur son titre : todo
-
+- Visualiser une annonce en cliquant sur son titre : 
 
 
-- ## à partir de AllUsers
+
+
+https://user-images.githubusercontent.com/91131812/196043285-8d97f712-947a-472b-96ea-6f00ced2ddef.mp4
+
+
+
+
+- ## à partir de AllUsers : 
 
 - Visualiser tout les utilisateurs avec leurs ID, username, password en * , role et ses annonces 
 
 
 https://user-images.githubusercontent.com/91131812/196042182-5f1de71f-9e20-48de-b0e2-fc12bbbd6e6f.mp4
 
-- Visualiser les annonces en cliquant sur leur ID : todo 
+- Visualiser une annonce en cliquant sur leur ID : todo 
+
+
+https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-944d-78a86c58bfa4.mp4
+
+
+- Modifier une des annonces en cliquant sur le bouton ***Edit*** de cette derniere :
 
 
 
-- Modifier une de ses annonces en cliquant sur le bouton ***Edit*** de cette derniere :
+- Ajouter un utilisateur en cliquant sur le bouton ***Add Ad*** :
 
-https://user-images.githubusercontent.com/91131467/196034941-83b8e95c-b92d-41b3-98c5-ec043997fac9.mp4
+https://user-images.githubusercontent.com/91131812/196042695-a4b2beef-389b-46bc-af67-1da43d466886.mp4
 
-- Ajouter une annonces en cliquant sur le bouton ***Add Ad*** :
 
-https://user-images.githubusercontent.com/91131467/196036256-cc616310-9e2d-45c2-b8ba-2bee291d7ce2.mp4
+-Supprimer une annonce en cliquant sur le bouton ***rouge*** : 
+
+https://user-images.githubusercontent.com/91131812/196042667-7da9dfb7-52bb-4450-bdc5-3d7839a42570.mp4
+
+
+- ## à partir de AllAds :
+-  Visualiser toutes lesannonces avec leurs ID, auteure, titre , description, prix et ses illustrations :  
+
+https://user-images.githubusercontent.com/91131812/196042815-594db0e9-0778-4a76-a730-b65d806bed9b.mp4
+
+- Visualier une annonce en cliquant sur leur titre : 
+
+https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-944d-78a86c58bfa4.mp4
+
+
+
+- Ajouter un utilisateur en cliquant sur le bouton ***Add Ad*** :
+
+
+
+-Supprimer une annonce en cliquant sur le bouton ***rouge*** : 
+
+
+
+https://user-images.githubusercontent.com/91131812/196043035-9038119a-7e60-469c-90ee-92a01d1f9680.mp4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Le FrontEnd gere l'affichage de cette interface precise pour l'USER grace aux balises GSP inclus comme par exemple : 
 ```html
