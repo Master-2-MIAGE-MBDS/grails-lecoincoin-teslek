@@ -78,6 +78,10 @@ https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-
 - Modifier une des annonces en cliquant sur le bouton ***Edit*** de cette derniere :
 
 
+https://user-images.githubusercontent.com/91131812/196045241-8f387555-9ab6-4764-8303-ffc195725d44.mp4
+
+
+
 - Ajouter une annonce en cliquant sur le bouton ***Add Ad*** :
 
 
@@ -104,7 +108,7 @@ Ce role a acces a tout les données exactement comme l'admin mais il n'a pas tou
 
 Le modérateur peut : 
 
--Visualiser les annonces dans DAshboard exctement commee l'admin. 
+-Visualiser les annonces dans Dashboard exctement commee l'admin. 
 
 
 - Visualiser une annonce en cliquant sur son titre exactemment comme l'admin.
@@ -119,17 +123,26 @@ Le modérateur peut :
 
 
 
+https://user-images.githubusercontent.com/91131812/196045625-0f0cea97-1a7f-4357-bb01-ee93ef9a2188.mp4
+
+
+
+
 - ## à partir de AllAds :
 -  Visualiser toutes lesannonces avec leurs ID, auteure, titre , description, prix et ses illustrations :  
 
-https://user-images.githubusercontent.com/91131812/196042815-594db0e9-0778-4a76-a730-b65d806bed9b.mp4
 
-- Visualier une annonce en cliquant sur leur titre : 
+https://user-images.githubusercontent.com/91131812/196045728-2a73610b-2156-4754-8541-4d5b2a80a29f.mp4
 
-https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-944d-78a86c58bfa4.mp4
+
+
+
+- Visualier une annonce en cliquant sur leur titre exactement comme l'admin.
+
 
 
 - Modifier une des annonces en cliquant sur le bouton ***Edit*** de cette derniere :
+- 
 
 
 
@@ -156,15 +169,34 @@ https://user-images.githubusercontent.com/91131812/196042557-a18532d5-43ca-4968-
 
 
 
-Le FrontEnd gere l'affichage de cette interface precise pour l'USER grace aux balises GSP inclus comme par exemple : 
+Le FrontEnd gere l'affichage de cette interface precise pour l'Admin et le moderateur grace aux balises GSP inclus comme par exemple : 
 ```html
-<sec:ifAnyGranted roles="ROLE_USER">
-  <a href = "/home/myaccount">
-    <i  class="zmdi zmdi-widgets" ></i>
-      My Account
-  </a>
-</sec:ifAnyGranted>
+  <sec:ifAnyGranted roles="ROLE_ADMIN, ROLE_MODERATOR">
+                    <a href="/home/AllUsers" >
+                        <i  class="zmdi zmdi-widgets" ></i>
+                            All Users
+                    </a>
+                </sec:ifAnyGranted>
 ```
+
+Aussi gére les personnes connéctés on utilisant la balise GSP par exemple : 
+
+```html
+  <sec:ifLoggedIn>
+                <sec:ifAnyGranted roles="ROLE_USER, ROLE_ADMIN, ROLE_MODERATOR">
+                    <section id = "panel-user-2">
+                        <div class="container">
+                            <g:each in="${annoncesList}" var="c">
+                                <div class="col-xs-12 col-md-6">
+                                    <!-- First product box start here-->
+                                    <div class="prod-info-main prod-wrap clearfix">
+                                        <div class="row">
+                                            <div class="col-md-5 col-sm-12 col-xs-12">
+                                                <div class="product-image">
+                                                  ....>
+ </sec:ifLoggedIn>
+```
+
 ### 2. SECURITE
 - **API REST** :  
 Chaque roles a ses propores droit et interdiction (par exemple un USER ne peut pas supprimer un autre utilsateur), on gere cela au niveau de notre **ApiController** comme suit :
