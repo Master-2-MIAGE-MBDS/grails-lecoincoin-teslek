@@ -168,10 +168,6 @@
 
                                         </div>
                                         <br>
-                                        <label for="editIllustration">Illustrations</label>
-                                        <g:uploadForm controller = "api" action = "illustrations" method = "POST" enctype="multipart/form-data">
-                                            <input type="file" id="editIllustration" name="illustration"  multiple accept="image/*">
-                                        </g:uploadForm>
                                         <br>
                                         <button type="submit" id = 'submitEditForm' onclick = 'patchAd()'>EDIT</button>
                                     </span>
@@ -266,7 +262,7 @@
 
                 var div = document.getElementById('editIllus')
                 for (var i = 0; i < imgsList.length; i++) {
-                    div.innerHTML += '<span id="'+imgsList[i]+'"><img src="/assets/'+imgsList[i]+'" class="illus" /> <button type="button"  class="buttonDeleteIlluC" id="buttonDeleteIlluI" value="'+imgsList[i]+'" onclick ="illus(\''+imgsList[i]+'\')">X</button></span>'
+                    div.innerHTML += '<span id="'+imgsList[i]+'"><img src="/assets/'+imgsList[i]+'" class="illus" /><button type="button"  class="buttonDeleteIlluC" id="buttonDeleteIlluI" value="'+imgsList[i]+'" onclick ="illus(\''+imgsList[i]+'\')">X</button></span>'
                     fns.push(imgsList[i])
                 }
             }

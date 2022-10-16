@@ -90,7 +90,7 @@
                                                 <td></td>
                                                 <td class="static"><input type="text" class="form-control" name="description"></td>
                                                 <td></td>
-                                                <td class="static"><input type="text" class="form-control" name="price"></td>
+                                                <td class="static"><input type="number" class="form-control" name="price"></td>
                                                 <td></td>
                                                 <td><input type="file" id="illustration" name="illustration"  multiple accept="image/*"></td>
                                                 <td></td>

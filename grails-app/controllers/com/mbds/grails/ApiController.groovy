@@ -43,7 +43,7 @@ class ApiController {
                 break;
             case "PUT":
                 if (user.getAuthorities()[0] == roleM || user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
-                    if (!(params.illustration == '')) {
+                    if (!(params.illustration == null)) {
                         def illus = params.illustrations.split(",")
                         println illus
                         def adillus = annonceInstance.getIllustrations()
@@ -67,11 +67,8 @@ class ApiController {
                     render(status: 400, text: 'YOU DONT HAVE RIGHTS')
                 break;
             case "PATCH":
-                println user == annonceInstance.getAuthor()
-                println user.getAuthorities()[0]
 
                 if(user.getAuthorities()[0] == roleM ||user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
-                    println "ici"
                     if (params.title != '' && params.price != '' && params.description != '' && params.author != '') {
                         render(status: 400, text: 'YOU MEAN PUT ?')
                     } else if (params.title == '' && params.price == '' && params.description == '' && params.author == '') {
@@ -141,7 +138,7 @@ class ApiController {
                 if (user.getAuthorities()[0] == roleA ||user.getAuthorities()[0] == roleU) {
                     def annonceInstance = new Annonce(title: params.title, description: params.description, price: Float.parseFloat(params.price))
                     annonceInstance.setActive(Boolean.TRUE)
-                    if (!(params.illus == null)) {
+                    if (!params.illustration.isEmpty()) {
                         request.getFiles("illustration").each {
                             def uploadFile = it
                             File newFile = new File("C:/Users/Dj/Desktop/M2/FRAMEWORK GRAILS/grails-lecoincoin-teslek/grails-app/assets/images/" + it.originalFilename)
@@ -159,7 +156,8 @@ class ApiController {
                             def url = createLink(controller: 'home', action: 'AllAds')
                             render(contentType: 'text/html', text: "<script>window.location.href='$url'</script>", status: 200)
                         }
-                    } else {
+                    }
+                    else {
                         user.addToAnnonces(annonceInstance)
                         user.save(flush: true)
                         def url = createLink(controller: 'home', action: 'myaccount')
@@ -201,21 +199,21 @@ class ApiController {
             case "PUT":
                 System.out.println(user.getAuthorities()[0])
 
-                if ((params.role == "Admin" || params.role == "admin") && user.getAuthorities()[0] == roleA) {
+                if ((params.role.toLowerCase() == "admin") && user.getAuthorities()[0] == roleA) {
                     userInstance.setUsername(params.username)
                     userInstance.setPassword(params.password)
                     UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                     UserRole.create(userInstance, roleA)
                 } else {
 
-                        if ((params.role == "User" || params.role == "user") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
+                        if ((params.role.toLowerCase() == "user") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
                             userInstance.setUsername(params.username)
                             userInstance.setPassword(params.password)
                             UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                             UserRole.create(userInstance, roleU, true)
                         }
                         else {
-                            if ((params.role == "Moderator" || params.role == "moderator") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
+                            if ((params.role.toLowerCase() == "moderator") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
                                 userInstance.setUsername(params.username)
                                 userInstance.setPassword(params.password)
                                 UserRole.remove(userInstance, userInstance.getAuthorities()[0])
@@ -239,33 +237,34 @@ class ApiController {
                     render(status: 400, text: 'NO FIELDS WERE FOUND')
                 }
                 else {
-
-                        if ((params.role == "Admin" ||params.role == "admin") && user.getAuthorities()[0] == roleA) {
+                    if(params.role != '')
+                    {
+                        if ((params.role.toLowerCase() == "admin") && user.getAuthorities()[0] == roleA) {
                             UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                             UserRole.create(userInstance, roleA)
-                        }
-                        else {
+                        } else {
 
-                            if ((params.role == "User" || params.role == "user") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
+                            if ((params.role.toLowerCase() == "user") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
                                 UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                                 UserRole.create(userInstance, roleU, true)
                             } else {
-                                if ((params.role == "Moderator" || params.role == "moderator") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
+                                if ((params.role.toLowerCase() == "moderator") && (user.getAuthorities()[0] == roleA || user.getAuthorities()[0] == roleM)) {
                                     UserRole.remove(userInstance, userInstance.getAuthorities()[0])
                                     UserRole.create(userInstance, roleM, true)
                                 } else {
-                                    if (params.role == "Moderator" || params.role == "moderator" || params.role == "User" || params.role == "user" ||params.role == "Admin" ||params.role == "admin" )
-                                       render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+                                    if (params.role.toLowerCase() == "moderator" || params.role.toLowerCase() == "user" || params.role.toLowerCase() == "admin")
+                                        render(status: 403, text: 'YOU DONT HAVE RIGHTS')
                                     else
-                                    render(status: 400, text: 'ROLE DOES NOT EXIST')
+                                        render(status: 400, text: 'ROLE DOES NOT EXIST')
 
                                 }
                             }
                         }
-                        if (params.username != '')
-                            userInstance.setUsername(params.username)
-                        if (params.password != '')
-                            userInstance.setPassword(params.password)
+                    }
+                    if (params.username != '')
+                        userInstance.setUsername(params.username)
+                    if (params.password != '')
+                        userInstance.setPassword(params.password)
 
                     userInstance.save(flush : true )
 

@@ -130,7 +130,7 @@
                                         <input type="text" id="editusername" name="username" placeholder="">
                                         <br>
                                         <label for="editpassword">Password</label>
-                                        <input type="text" id="editpassword" name="password" placeholder="">
+                                        <input type="password" id="editpassword" name="password" placeholder="">
                                         <label for="editrole">Role</label>
                                         <br>
                                         <input type="text" id="editrole" name="role" placeholder="">
