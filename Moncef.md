@@ -240,5 +240,40 @@ def user() {
 ```
 
 
+## 3.API REST :
 
+On a un APIContolleur dans notre controlleur qu'on a implémenter en utilisants des methodes et dans ces methodes on fait des swith ou dans ces dernier on implémente les methodes GET, PUT, PATCH, DELETE et POST. 
+
+On a utilisé Secured au debut du la class API Controlleur pour donner accées a les roles qui peuvent effectuer des changements en utilisant a l4API dans notre cas on a donné acces a tout les roles. On a géré les droits par utiliser des conditions dans les methodes ou on retourne 200 quand tout est bon, 400 qu'on a un manque d'information avec un message "NOT ALL FIELDS FOUND" ou "ROLE DOES NOT EXIST" et 403 qu'on le user connécté n'a pas le droit a effectuer la methode avec un message de "YOU DONT HAVE RIGHTS". 
+
+par exemple : 
+``` java 
+case "PUT":
+                if (user.getAuthorities()[0] == roleM || user.getAuthorities()[0] == roleA || user == annonceInstance.getAuthor()) {
+                    if (params.illustrations != '') {
+                        def illus = params.illustrations.split(",")
+                        println illus
+                        def adillus = annonceInstance.getIllustrations()
+                        annonceInstance.illustrations = null
+                        for (int i = 0; i < adillus.size(); i++)
+                            adillus[i].delete(flush: true)
+                        for (int i = 0; i < illus.size(); i++)
+                            annonceInstance.addToIllustrations(new Illustration(filename: illus[i]))
+                    }
+                    if (params.title != '' || params.price != '' || params.description != '' || params.author != '') {
+                        annonceInstance.setAuthor(User.findByUsername(params.author))
+                        annonceInstance.title = params.title
+                        annonceInstance.price = request.getParameter('price').toFloat()
+                        annonceInstance.description = params.description
+                        annonceInstance.save(flush: true)
+                        return response.status = 200
+                    } else
+                        render(status: 400, text: 'NOT ALL FIELDS FOUND')
+                }
+                else
+                    render(status: 400, text: 'YOU DONT HAVE RIGHTS')
+                break;
+                
+                
+       ```
 
