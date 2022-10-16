@@ -39,6 +39,11 @@ class ApiController {
         switch (request.getMethod()) {
 
             case "GET":
+                if ( user.getAuthorities()[0] == roleU ){
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+                      break ;
+                }
+
                 renderThis(request.getHeader("Accept"), annonceInstance)
                 break;
             case "PUT":
@@ -133,6 +138,9 @@ class ApiController {
         def annoncesInstance = Annonce.getAll()
         switch (request.getMethod()) {
             case "GET":
+                if ( user.getAuthorities()[0] == roleU ){
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+                    break ;}
                 renderThis(request.getHeader("Accept"), annoncesInstance)
                 break;
             case "POST":
@@ -195,10 +203,18 @@ class ApiController {
         switch (request.getMethod()) {
 
             case "GET":
+                if ( user.getAuthorities()[0] == roleU ){
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+                    break ;}
+
                 renderThis(request.getHeader("Accept"), userInstance)
                 break;
 
             case "PUT":
+
+                if(user.getAuthorities()[0] == roleU)
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+
 
                 if ((params.role.toLowerCase() == "admin") && user.getAuthorities()[0] == roleA) {
                     userInstance.setUsername(params.username)
@@ -305,6 +321,9 @@ class ApiController {
         switch (request.getMethod()) {
 
             case "GET":
+                if ( user.getAuthorities()[0] == roleU ){
+                    render(status: 403, text: 'YOU DONT HAVE RIGHTS')
+                    break ;}
                 renderThis(request.getHeader("Accept"), usersInstance)
                 break;
             case "POST":
